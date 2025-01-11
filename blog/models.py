@@ -1,77 +1,117 @@
 from django.db import models
+from django.db.models import TextField, ForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
 
 
 
-class Post(models.Model):
-    restuarant_id = models.CharField(max_lenth=250)
-    created_date = models.CharField(max_lenth=250)
-    post_content = models.CharField(max_lenth=250)
-    visit_date = models.CharField(max_lenth=250)
-    rate_1 = models.CharField(max_lenth=250)
-    rate_2 = models.CharField(max_lenth=250)
-    rate_3 = models.CharField(max_lenth=250)
-    rate_4 = models.CharField(max_lenth=250)
+class Country(models.Model):
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=200, blank=True)
 
     class Meta:
-        ordering = ('created_date')
+        ordering = ('name',)
 
     def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
+        return self.name
 
-class Restaurant(models.Model):
-    city_id = models.CharField(max_lenth=250)
-    name = models.CharField(max_lenth=250)
-    description = models.CharField(max_lenth=250)
-    colorsys = models.CharField(max_lenth=250)
-
-    class Meta:
-        ordering = ('created_date')
-
-    def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
 
 class City(models.Model):
-    city_id = models.CharField(max_lenth=250)
-    country_id = models.CharField(max_lenth=250)
-    name = models.CharField(max_lenth=250)
+    country = models.ForeignKey(Country, on_delete=models.CASCADE, related_name='cities')
+    name = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=200, blank=True)
 
     class Meta:
-        ordering = ('created_date')
+        ordering = ('name',)
 
     def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
+        return f'Kraj: {self.country.name} Miasto: {self.name}'
 
 
-class Conutry(models.Model):
-    name = models.CharField(max_lenth=250)
+class Restaurant(models.Model):
+    city = models.ForeignKey(City, on_delete=models.CASCADE, related_name='restaurants')
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    # TODO: Usunać color z restauracji???
+    color = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=200, blank=True)
 
     class Meta:
-        ordering = ('created_date')
+        ordering = ('name',)
 
     def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
+        return f'Restauracja: {self.name}'
 
 
 class Image(models.Model):
-    date = models.CharField(max_lenth=250)
-    restaurant_id = models.CharField(max_lenth=250)
-    recipe_id = models.CharField(max_lenth=250)
+    add_date = models.DateField()
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=200, blank=True)
+    image =models.ImageField(upload_to='images/%Y/%m/%d')
+    #GenericForeignKey
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # Model docelowy
+    object_id = models.PositiveIntegerField()  # ID obiektu docelowego
+    content_object = GenericForeignKey('content_type', 'object_id')  # Łączy content_type i object_id
+    slug = models.SlugField(max_length=200, blank=True)
 
     class Meta:
-        ordering = ('created_date')
+        ordering = ('title',)
 
     def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
+        return f'Tytul: {self.title}'
 
 
 class Recipe(models.Model):
-    date = models.CharField(max_lenth=250)
-    image = models.CharField(max_lenth=250)
-    name = models.CharField(max_lenth=250)
-    description = models.CharField(max_lenth=250)
+    date = models.DateField()
+    title = models.CharField(max_length=250)
+    description = models.TextField()
+    slug = models.SlugField(max_length=200, blank=True)
 
     class Meta:
-        ordering = ('created_date')
+        ordering = ('title',)
 
     def __str__(self):
-        return f'Data wizyty: {self.visit_date} Post: {self.post_content[100:]}...'
+        return f'Tytuł przepisu: {self.title}'
+
+
+class Post(models.Model):
+    RATE = [
+        (1, "Bardzo słabo"),
+        (2, "Słabo"),
+        (3, "Średnio"),
+        (4, "Dobrze"),
+        (5, "Bardzo dobrze"),
+        (6, "Celująco"),
+    ]
+    title = models.CharField(max_length=250)
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    restaurant = models.ForeignKey(Restaurant,on_delete=models.CASCADE, related_name='posts')
+    visit_date = models.DateTimeField()
+    taste_rating = models.IntegerField(choices=RATE)
+    price_rating = models.IntegerField(choices=RATE)
+    restaurant_rating = models.IntegerField(choices=RATE)
+    overall_rating = models.IntegerField(choices=RATE)
+    slug = models.SlugField(max_length=200, blank=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        if len(self.body) > 100:
+            return f'Data wizyty: {self.created} Post: {self.body[100:]}...'
+        else:
+            return f'Data wizyty: {self.created} Post: {self.body}'
+
+    def get_taste_rating_display(self):
+        return dict(self.RATE).get(self.taste_rating, "Brak oceny")
+
+    def get_price_rating_display(self):
+        return dict(self.RATE).get(self.price_rating, "Brak oceny")
+
+    def get_restaurant_rating_display(self):
+        return dict(self.RATE).get(self.restaurant_rating, "Brak oceny")
+
+    def get_overall_rating_display(self):
+        return dict(self.RATE).get(self.overall_rating, "Brak oceny")
+
