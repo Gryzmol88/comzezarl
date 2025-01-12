@@ -1,54 +1,5 @@
-::after,
-::before {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
 
-a {
-    text-decoration: none;
-}
-
-li {
-    list-style: none;
-}
-
-h1 {
-    font-weight: 600;
-    font-size: 1.5rem;
-}
-
-html, body {
-    font-family: 'Poppins', sans-serif;
-    height: 100%;
-    margin:0;
-}
-
-.wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-.navbar {
-height: 60px;
-
-}
-
-.main {
-    min-height: 100vh;
-    width: 100%;
-    overflow: hidden;
-    transition: all 0.35s ease-in-out;
-    background-color: #fafbfe;
-    display:flex;
-    flex: 1;
-
-}
-
-
-
-#sidebar {
+aside {
     width: 260px;
     min-width: 260px;
     z-index: 1000;
@@ -56,86 +7,70 @@ height: 60px;
     background-color: #0e2238;
     display: flex;
     flex-direction: column;
-
-
-}
-
-.text-center {
-    flex:1;
+    height: 100vh;
+    color: white;
 
 }
 
+/* Zmiana koloru tła dla całego accordion */
+#restaurantAccordion {
+  background-color: transparent; /* Jasny kolor tła, np. AliceBlue */
+   border: none; /* Usunięcie obramowania */
+  color: #FFF;
+  padding: 1rem; /* Opcjonalne odstępy wewnętrzne */
 
-.toggle-btn {
-    background-color: transparent;
-    cursor: pointer;
-    border: 0;
-    padding: 1rem 1.5rem;
 }
 
-.toggle-btn i {
-    font-size: 1.5rem;
+/*Stylowanie dla poszczególnych elementów accordion-item */
+.accordion-item {
+  background-color: transparent;  /*Tło dla każdego elementu */
+  border: none;
+  margin-bottom: 0.5rem;
+}
+
+.accordion-button.collapsed {
+  background-color: transparent; /* Kolor tła przycisku po złożeniu */
+  border: none;
     color: #FFF;
 }
 
-.sidebar-logo {
-    margin: auto 0;
+
+/* Stylowanie przycisków accordion-button */
+.accordion-button {
+  background-color: transparent; /* Kolor tła przycisku */
+  color: #FFF; /* Kolor tekstu */
+  border: none;
+    box-shadow: none; /* Usuwa cień wokół przycisku */
+
 }
 
-.sidebar-logo a {
+/* Stylowanie dla rozwijanej sekcji accordion-collapse */
+.accordion-collapse {
+  background-color: transparent; /* Tło dla zawartości po rozwinięciu */
+  padding: 0.5rem;
+
+}
+
+/* Stylowanie tytułu przycisku rozwiniętego accordion (bez tła) */
+.accordion-button:not(.collapsed) {
+    background-color: transparent; /* Brak tła dla rozwiniętego tytułu */
+    border: none;
     color: #FFF;
-    font-size: 1.15rem;
-    font-weight: 600;
-    padding: .625rem 1.625rem;
 }
 
-
-
-.sidebar-nav {
-    padding: 2rem 0;
-    flex: 1 1 auto;
+/* Usunięcie niebieskiej ramki (outline) z przycisków i elementów po kliknięciu */
+.accordion-button:focus {
+    outline: none;  /* Usuwa niebieską ramkę po kliknięciu */
+    box-shadow: none; /* Usuwa cień, który może być również dodany */
 }
 
-a.sidebar-link {
-    padding: .625rem 1.625rem;
-    color: #FFF;
-    display: block;
-    font-size: 0.9rem;
-    white-space: nowrap;
-    border-left: 3px solid transparent;
+/* Stylowanie dla <strong> wewnątrz <a> w kontenerze <aside> */
+aside a strong {
+    color: white;  /* Kolor tekstu <strong> w <a> wewnątrz <aside> */
 }
 
-.sidebar-link i {
-    font-size: 1.1rem;
-    margin-right: .75rem;
+/* Zwiększenie odstępów wewnętrznych w linku */
+aside li {
+    margin-bottom: 15px; /* Zwiększa odstęp między kolejnymi elementami <li> */
 }
-
-a.sidebar-link:hover {
-    background-color: rgba(255, 255, 255, .075);
-    border-left: 3px solid #3b7ddd;
-}
-
-.sidebar-item {
-    position: relative;
-}
-
-
-#sidebar .sidebar-link[data-bs-toggle="collapse"]::after {
-    border: solid;
-    border-width: 0 .075rem .075rem 0;
-    content: "";
-    display: inline-block;
-    padding: 2px;
-    position: absolute;
-    right: 1.5rem;
-    top: 1.4rem;
-    transform: rotate(-135deg);
-    transition: all .2s ease-out;
-}
-
-#sidebar .sidebar-link[data-bs-toggle="collapse"].collapsed::after {
-    transform: rotate(45deg);
-    transition: all .2s ease-out;
-}
-
 
