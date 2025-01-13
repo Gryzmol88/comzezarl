@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
-from blog.models import City, Restaurant, Post
+from .models import City, Restaurant, Post
+from .forms import PostForm
 
 
 # Create your views here.
@@ -31,4 +32,11 @@ def recipe_page(request):
 
 def contact_page(request):
     return render(request, 'blog/post/contact.html')
+
+
+# Obsługa formularzy
+
+# def add_post(request):
+#     post = get_object_or_404(Post)
+#
 
