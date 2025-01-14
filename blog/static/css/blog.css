@@ -12,6 +12,8 @@ aside {
 
 }
 
+
+
 /* Zmiana koloru tła dla całego accordion */
 #restaurantAccordion {
   background-color: transparent; /* Jasny kolor tła, np. AliceBlue */
@@ -74,3 +76,16 @@ aside li {
     margin-bottom: 15px; /* Zwiększa odstęp między kolejnymi elementami <li> */
 }
 
+aside.narrow {
+    width: 60px;
+    min-width: 60px;
+}
+
+body {
+    background-image: url("{% static 'blog/img/background.png' %}");
+    background-size: cover; /* Dopasowanie obrazu do rozmiaru okna */
+    background-repeat: repeat; /* Wyłączenie powtarzania obrazu */
+    background-position: center; /* Wyśrodkowanie obrazu */
+        border: 5px solid red; /* Grubość: 2px, styl: solid, kolor: czerwony */
+        background-size:100%;
+}
