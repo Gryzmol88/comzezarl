@@ -81,11 +81,27 @@ aside.narrow {
     min-width: 60px;
 }
 
-body {
-    background-image: url("{% static 'blog/img/background.png' %}");
-    background-size: cover; /* Dopasowanie obrazu do rozmiaru okna */
-    background-repeat: repeat; /* Wyłączenie powtarzania obrazu */
-    background-position: center; /* Wyśrodkowanie obrazu */
-        border: 5px solid red; /* Grubość: 2px, styl: solid, kolor: czerwony */
-        background-size:100%;
+/* Główna zawartość */
+.main-container {
+  flex: 1; /* Zajmuje resztę dostępnego miejsca */
+  margin-left: 260px; /* Przesunięcie w prawo o szerokość aside */
+  padding: 20px;
+  display: flex; /* Dodane: umożliwia centrowanie zawartości */
+  justify-content: center; /* Poziome centrowanie */
+  align-items: center; /* Pionowe centrowanie */
+  background-image: url('/static/img/background.svg'); /* Tło obrazka */
+  background-size: 100px 100px; /* Rozmiar miniatury */
+  background-repeat: repeat; /* Powtarzanie obrazu */
+  background-position: top left; /* Ustawienie obrazu w lewym górnym rogu */
+  background-blend-mode: multiply; /* Mieszanie obrazu z kolorem tła */
+  /* Usunięcie tła kolorowego z przezroczystością */
+}
+
+/* Treść główna */
+.main-content {
+  text-align: center; /* Wyrównanie tekstu na środku */
+  max-width: 800px; /* Ograniczenie szerokości treści */
+  color: #333333; /* Ciemny kolor tekstu */
+ border: 5px solid red;  Gruba czerwona ramka */
+  padding: 20px; /* Dodatkowa przestrzeń */
 }
