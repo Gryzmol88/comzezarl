@@ -3,8 +3,9 @@
 }
 
 .sidebar{
-    background-color: #0e2238;
-    height: 200px;
+background-color: #0e2238;
+    height: flex;
+    color: black;
 }
 
 .sidebar.content{
@@ -23,7 +24,35 @@ border: 5px solid red;
 
 .main-container{
    background-color: #b9d8fa;
-
-/*   background-image: url("{% static 'img/background.svg' %}");*/
-/*    border: 5px solid red;*
 }
+/*   background-image: url("{% static 'img/background.svg' %}");*/
+/*    border: 5px solid red;*/
+
+
+.sidebar-header{
+color: white;
+ font-size: 2em; /* Czcionka będzie 1.5x większa od rodzica */
+}
+
+
+  .accordion-item {
+    background-color: transparent; /* Ciemne tło dla elementów panelu */
+     border: none;
+  }
+  .accordion-button {
+    color: white; /* Biały tekst przycisków */
+     border: none;
+     background-color: transparent;
+  }
+  .accordion-button:not(.collapsed) {
+    background-color: transparent; /* Lżejszy kolor przy rozwinięciu */
+    color: white;
+     border: none;
+  }
+  .accordion-button::after {
+    color: white; /* Biały kolor strzałek */
+     border: none;
+  }
+  .accordion-button:not(.collapsed)::after {
+    transform: rotate(180deg); /* Obrót strzałki przy rozwinięciu */
+  }

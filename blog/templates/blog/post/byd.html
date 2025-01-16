@@ -5,15 +5,42 @@
 
 {% block sidebar %}
 
-    <h1>Treść w sidebar </h1>
-    <p>To jest przykład treści w sidebar. Możesz tutaj dodać tekst, obrazy lub inne elementy.</p>
-                {% endblock %}
+
+<div class="container mt-3">
+  <div class="sidebar-header">Lista restauracji</div>
+  <div class="accordion" id="restaurantAccordion">
+    {% for restaurant in restaurants %}
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="heading{{ restaurant.id }}">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ restaurant.id }}" aria-expanded="false" aria-controls="collapse{{ restaurant.id }}">
+          {{ restaurant.name }}
+        </button>
+      </h2>
+      <div id="collapse{{ restaurant.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ restaurant.id }}" data-bs-parent="#restaurantAccordion">
+        <div class="accordion-body">
+          <ul>
+            {% for post in restaurant.posts.all %}
+            <li>
+  <a href="#">
+    <strong>{{ post.created }}</strong></a>
+</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+{% endblock %}
 
 
 {% block content %}
 
-    <h1>Treść główna strony</h1>
-    <p>To jest przykład treści głównej strony. Możesz tutaj dodać tekst, obrazy lub inne elementy.</p>
+<h1>Treść główna strony</h1>
+<p>To jest przykład treści głównej strony. Możesz tutaj dodać tekst, obrazy lub inne elementy.</p>
 
 
 {% endblock %}
