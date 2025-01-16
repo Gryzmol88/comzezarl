@@ -3,6 +3,7 @@
 import os
 import sys
 
+#TODO Przy próbie wgrania ackground pokazuje scieżke błędu. Zawarta jest sciezka do katalogu static/css zamiast static/img DLACZEGO
 
 def main():
     """Run administrative tasks."""

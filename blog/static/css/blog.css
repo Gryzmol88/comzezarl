@@ -1,107 +1,29 @@
-
-aside {
-    width: 260px;
-    min-width: 260px;
-    z-index: 1000;
-    transition: all .25s ease-in-out;
-    background-color: #0e2238;
-    display: flex;
-    flex-direction: column;
+.wrapper{
     height: 100vh;
+}
+
+.sidebar{
+    background-color: #0e2238;
+    height: 200px;
+}
+
+.sidebar.content{
+border: 5px solid red;
+}
+
+
+
+.footer {
+    height: 60px;
+    background-color: #343a40;
     color: white;
-
+    padding: 20px;
+    text-align: center;
 }
 
+.main-container{
+   background-color: #b9d8fa;
 
-
-/* Zmiana koloru tła dla całego accordion */
-#restaurantAccordion {
-  background-color: transparent; /* Jasny kolor tła, np. AliceBlue */
-   border: none; /* Usunięcie obramowania */
-  color: #FFF;
-  padding: 1rem; /* Opcjonalne odstępy wewnętrzne */
-
-}
-
-/*Stylowanie dla poszczególnych elementów accordion-item */
-.accordion-item {
-  background-color: transparent;  /*Tło dla każdego elementu */
-  border: none;
-  margin-bottom: 0.5rem;
-}
-
-.accordion-button.collapsed {
-  background-color: transparent; /* Kolor tła przycisku po złożeniu */
-  border: none;
-    color: #FFF;
-}
-
-
-/* Stylowanie przycisków accordion-button */
-.accordion-button {
-  background-color: transparent; /* Kolor tła przycisku */
-  color: #FFF; /* Kolor tekstu */
-  border: none;
-    box-shadow: none; /* Usuwa cień wokół przycisku */
-
-}
-
-/* Stylowanie dla rozwijanej sekcji accordion-collapse */
-.accordion-collapse {
-  background-color: transparent; /* Tło dla zawartości po rozwinięciu */
-  padding: 0.5rem;
-
-}
-
-/* Stylowanie tytułu przycisku rozwiniętego accordion (bez tła) */
-.accordion-button:not(.collapsed) {
-    background-color: transparent; /* Brak tła dla rozwiniętego tytułu */
-    border: none;
-    color: #FFF;
-}
-
-/* Usunięcie niebieskiej ramki (outline) z przycisków i elementów po kliknięciu */
-.accordion-button:focus {
-    outline: none;  /* Usuwa niebieską ramkę po kliknięciu */
-    box-shadow: none; /* Usuwa cień, który może być również dodany */
-}
-
-/* Stylowanie dla <strong> wewnątrz <a> w kontenerze <aside> */
-aside a strong {
-    color: white;  /* Kolor tekstu <strong> w <a> wewnątrz <aside> */
-}
-
-/* Zwiększenie odstępów wewnętrznych w linku */
-aside li {
-    margin-bottom: 15px; /* Zwiększa odstęp między kolejnymi elementami <li> */
-}
-
-aside.narrow {
-    width: 60px;
-    min-width: 60px;
-}
-
-/* Główna zawartość */
-.main-container {
-  flex: 1; /* Zajmuje resztę dostępnego miejsca */
-  margin-left: 260px; /* Przesunięcie w prawo o szerokość aside */
-  padding: 20px;
-  display: flex; /* Dodane: umożliwia centrowanie zawartości */
-  justify-content: center; /* Poziome centrowanie */
-  align-items: center; /* Pionowe centrowanie */
-  background-image: url('/static/img/background.svg'); /* Tło obrazka */
-  background-size: 100px 100px; /* Rozmiar miniatury */
-  background-repeat: repeat; /* Powtarzanie obrazu */
-  background-position: top left; /* Ustawienie obrazu w lewym górnym rogu */
-  background-blend-mode: multiply; /* Mieszanie obrazu z kolorem tła */
-  /* Usunięcie tła kolorowego z przezroczystością */
-}
-
-/* Treść główna */
-.main-content {
-  text-align: center; /* Wyrównanie tekstu na środku */
-  max-width: 800px; /* Ograniczenie szerokości treści */
-  color: #333333; /* Ciemny kolor tekstu */
- border: 5px solid red;  Gruba czerwona ramka */
-  padding: 20px; /* Dodatkowa przestrzeń */
+/*   background-image: url("{% static 'img/background.svg' %}");*/
+/*    border: 5px solid red;*
 }
