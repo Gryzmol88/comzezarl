@@ -1,3 +1,4 @@
+
 .wrapper{
     height: 100vh;
 }
@@ -35,24 +36,43 @@ color: white;
 }
 
 
-  .accordion-item {
-    background-color: transparent; /* Ciemne tło dla elementów panelu */
-     border: none;
-  }
-  .accordion-button {
-    color: white; /* Biały tekst przycisków */
-     border: none;
-     background-color: transparent;
-  }
-  .accordion-button:not(.collapsed) {
-    background-color: transparent; /* Lżejszy kolor przy rozwinięciu */
-    color: white;
-     border: none;
-  }
-  .accordion-button::after {
-    color: white; /* Biały kolor strzałek */
-     border: none;
-  }
-  .accordion-button:not(.collapsed)::after {
-    transform: rotate(180deg); /* Obrót strzałki przy rozwinięciu */
-  }
+.accordion {
+    --bs-accordion-btn-icon:  url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+    --bs-accordion-btn-active-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='red' stroke-linecap='round' stroke-linejoin='round'%3e%3cpath d='M2 5L8 11L14 5'/%3e%3c/svg%3e");
+    --bs-accordion-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, border-radius 0.15s ease;
+    --bs-accordion-color: white; /*Kropki przy datach po rozwinięciu*/
+    --bs-accordion-bg: transparent; /*Kolor tła dla tytułu i rozwiniętego pola*/
+    --bs-accordion-border-color: transparent; /*Ramka */
+    --bs-accordion-btn-color: white; /*Kolor Napisów tytułu*/
+    --bs-accordion-btn-bg: transparent; /*Kolor tła tytułu nierozwinietego*/
+    --bs-accordion-active-color: white; /*kolor napisów tytułu gdy rozwiniete*/
+    --bs-accordion-active-bg: transparent; /*Kolor tła tytułu gdy rozwinięte*/
+    --bs-accordion-btn-focus-box-shadow: none;
+}
+
+
+.accordion-body ul li a  {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    text-decoration: underline;
+        margin-top: 2rem; /* Odstęp przed linkiem */
+    margin-bottom: 2rem; /* Odstęp po linku */
+}
+
+li::marker {
+    color: red; /* Kolor markeru */
+    font-size: 20px; /* Rozmiar markeru */
+}
+
+/*
+ul {
+    list-style-image: url("/static/icon/hat-chef-3.svg"); */
+/* Możesz ustawić obrazek jako marker *//*
+
+        display: inline-block;
+    width: 16px; */
+/* Szerokość markeru *//*
+
+    height: 16px; */
+/* Wysokość markeru *//*
+
+}*/
