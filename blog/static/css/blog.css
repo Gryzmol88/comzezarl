@@ -1,11 +1,12 @@
+.wrapper {
 
-.wrapper{
-    height: 100vh;
+  height: 100%;
+border: 5px solid red;
 }
+
 
 .sidebar{
 background-color: #0e2238;
-    height: flex;
     color: black;
 }
 
@@ -21,6 +22,8 @@ border: 5px solid red;
     color: white;
     padding: 20px;
     text-align: center;
+    width: 100%; /* Szerokość 100% */
+    position: relative; /* Stopka będzie na dole */
 }
 
 .main-container{
@@ -54,8 +57,28 @@ color: white;
 .accordion-body ul li a  {
     color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
     text-decoration: underline;
-        margin-top: 2rem; /* Odstęp przed linkiem */
-    margin-bottom: 2rem; /* Odstęp po linku */
+
+}
+
+.accordion-button  {
+        margin-top: .2rem; /* Odstęp przed linkiem */
+    margin-bottom: .2rem; /* Odstęp po linku */
+
+}
+
+
+.accordion-body {
+    padding-top: 0.5rem;  /* Odstęp od góry */
+    padding-right: 1rem;  /* Odstęp od prawej */
+    padding-bottom: 0.5rem;  /* Odstęp od dołu */
+    padding-left: 1rem;  /* Odstęp od lewej */
+
+}
+
+
+.accordion-body ul li {
+        margin-top: 1rem; /* Odstęp przed linkiem */
+    margin-bottom: 1rem; /* Odstęp po linku */
 }
 
 li::marker {
