@@ -33,10 +33,15 @@ def recipe_page(request):
 def contact_page(request):
     return render(request, 'blog/post/contact.html')
 
+def add_new_post(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            cd = form.cleaned_data
+    else:
+        form = PostForm()
 
-# Obsługa formularzy
+    return render(request, 'blog/post/new_post.html',{'form':form})
 
-# def add_post(request):
-#     post = get_object_or_404(Post)
-#
+
 

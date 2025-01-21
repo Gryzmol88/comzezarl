@@ -12,4 +12,5 @@ urlpatterns = [
     path('other/',views.other_page, name='other'),
     path('recipe/',views.recipe_page, name='recipe'),
     path('contact/',views.contact_page, name='contact'),
+    path('newpost/',views.add_new_post, name='newpost'),
 ]
