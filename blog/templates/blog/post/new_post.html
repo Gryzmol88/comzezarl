@@ -4,7 +4,6 @@
 
 
 
-
 {% block content %}
 
 <h1>Treść główna strony</h1>
@@ -12,6 +11,7 @@
 <form action="." method="post">
     {{ form.as_p }}
     {% csrf_token %}
+        <button type="submit">Zatwierdź</button>
 
 </form>
 

@@ -41,7 +41,11 @@ def add_new_post(request):
     else:
         form = PostForm()
 
-    return render(request, 'blog/post/new_post.html',{'form':form})
+    context = {
+        'form':form,
+    }
+
+    return render(request, 'blog/post/new_post.html',context)
 
 
 
