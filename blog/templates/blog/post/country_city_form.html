@@ -1,4 +1,30 @@
-  $(document).ready(function () {
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Country and Cities</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Select Country and City</h1>
+    <form>
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option value="">--- Select a country ---</option>
+            {% for country in countries %}
+            <option value="{{ country.id }}">{{ country.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="city">City:</label>
+        <select id="city" name="city" disabled>
+            <option value="">--- Select a city ---</option>
+        </select>
+    </form>
+
+    <script>
+        $(document).ready(function () {
             $('#country').change(function () {
                 const countryId = $(this).val();
                 const citySelect = $('#city');
@@ -24,3 +50,6 @@
                 }
             });
         });
+    </script>
+</body>
+</html>

@@ -6,13 +6,24 @@
 
 {% block content %}
 
+
+
 <h1>Treść główna strony</h1>
 <p>DODAWANIE NOWYCH ELEMENTÓW.</p>
-<form action="." method="post">
-    {{ form.as_p }}
-    {% csrf_token %}
-        <button type="submit">Zatwierdź</button>
+  <h1>Select Country and City</h1>
+    <form>
+        <label for="country">Country:</label>
+        <select id="country" name="country">
+            <option value="">--- Select a country ---</option>
+            {% for country in countries %}
+            <option value="{{ country.id }}">{{ country.name }}</option>
+            {% endfor %}
+        </select>
 
-</form>
+        <label for="city">City:</label>
+        <select id="city" name="city" disabled>
+            <option value="">--- Select a city ---</option>
+        </select>
+    </form>
 
 {% endblock %}
