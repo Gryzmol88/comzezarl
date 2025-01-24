@@ -86,16 +86,13 @@ li::marker {
     font-size: 20px; /* Rozmiar markeru */
 }
 
-/*
-ul {
-    list-style-image: url("/static/icon/hat-chef-3.svg"); */
-/* Możesz ustawić obrazek jako marker *//*
-
-        display: inline-block;
-    width: 16px; */
-/* Szerokość markeru *//*
-
-    height: 16px; */
-/* Wysokość markeru *//*
-
-}*/
+    /* Zmiana koloru na szary dla przycisków Plus */
+    .custom-plus {
+        border-color: #6c757d;
+        background-color: #d1dae0;
+        color: #6c757d;
+    }
+    .custom-plus:hover {
+        background-color: #099104;
+        color: white;
+    }

@@ -1,26 +1,41 @@
-  $(document).ready(function () {
-            $('#country').change(function () {
-                const countryId = $(this).val();
-                const citySelect = $('#city');
+$(document).ready(function () {
+    $("#country-select").change(function () {
+        const countryId = $(this).val(); // Pobieramy ID wybranego kraju
+        const citySelect = $("#city-select");
 
-                if (countryId) {
-                    $.ajax({
-                        url: `/get-cities/${countryId}/`, // URL endpoint do widoku
-                        method: 'GET',
-                        success: function (data) {
-                            citySelect.empty().append('<option value="">--- Select a city ---</option>');
-                            data.forEach(function (city) {
-                                citySelect.append(`<option value="${city.id}">${city.name}</option>`);
-                            });
-                            citySelect.prop('disabled', false);
-                        },
-                        error: function () {
-                            alert('An error occurred while fetching cities.');
-                        }
-                    });
+        // Wyczyść listę miast
+        citySelect.empty();
+        citySelect.append('<option value="">-- Wybierz miasto --</option>');
+
+        // Jeśli nie wybrano kraju, wyłącz listę miast
+        if (!countryId) {
+            citySelect.prop("disabled", true);
+            return;
+        }
+
+        // Wysyłamy żądanie AJAX do widoku Django
+        $.ajax({
+            url: `/newpost/${countryId}/cities/`,
+            method: "GET",
+            success: function (response) {
+                const cities = response.cities;
+
+                // Jeśli brak miast w odpowiedzi
+                if (cities.length === 0) {
+                    citySelect.append('<option value="">Brak miast w tym kraju</option>');
                 } else {
-                    citySelect.empty().append('<option value="">--- Select a city ---</option>');
-                    citySelect.prop('disabled', true);
+                    // Dodaj miasta do rozwijanej listy
+                    cities.forEach(city => {
+                        citySelect.append(`<option value="${city.id}">${city.name}</option>`);
+                    });
                 }
-            });
+
+                // Włącz listę miast
+                citySelect.prop("disabled", false);
+            },
+            error: function () {
+                alert("Wystąpił błąd podczas ładowania miast.");
+            }
         });
+    });
+});

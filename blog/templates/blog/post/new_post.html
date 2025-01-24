@@ -2,28 +2,65 @@
 {% block title %}Aktualności{% endblock %}
 
 
-
-
 {% block content %}
 
 
+<form method="POST" action="{% url 'blog:newpost' %}">
+    {% csrf_token %}
 
-<h1>Treść główna strony</h1>
-<p>DODAWANIE NOWYCH ELEMENTÓW.</p>
-  <h1>Select Country and City</h1>
-    <form>
-        <label for="country">Country:</label>
-        <select id="country" name="country">
-            <option value="">--- Select a country ---</option>
-            {% for country in countries %}
-            <option value="{{ country.id }}">{{ country.name }}</option>
-            {% endfor %}
-        </select>
 
-        <label for="city">City:</label>
-        <select id="city" name="city" disabled>
-            <option value="">--- Select a city ---</option>
-        </select>
-    </form>
+    <div class="container">
+        <!-- Wybór kraju -->
+        <div class="mb-3">
+            <label for="country-select" class="form-label">Wybierz kraj:</label>
+            <div class="input-group">
+                <!-- Przycisk Plus do dodania kraju -->
+                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-country-btn">+</button>
+                <select id="country-select" class="form-select w-50 d-inline-block">
+                    <option value="">-- Wybierz kraj --</option>
+                    {% for country in countries %}
+                    <option value="{{ country.id }}">{{ country.name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <!-- Wybór miasta -->
+        <div class="mb-3">
+            <label for="city-select" class="form-label">Wybierz miasto:</label>
+            <div class="input-group">
+                <!-- Przycisk Plus do dodania miasta -->
+                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-city-btn">+</button>
+                <select id="city-select" class="form-select w-50 d-inline-block" disabled>
+                    <option value="">-- Najpierw wybierz kraj --</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Pozostałe pola formularza -->
+        <div class="mb-3">
+            <label for="restaurant-name" class="form-label">Nazwa restauracji:</label>
+            <input type="text" id="restaurant-name" class="form-control w-50 d-inline-block"
+                   placeholder="Wpisz nazwę restauracji">
+        </div>
+
+        <div class="mb-3">
+            <label for="post-title" class="form-label">Tytuł postu:</label>
+            <input type="text" id="post-title" class="form-control w-50 d-inline-block" placeholder="Wpisz tytuł postu">
+        </div>
+
+        <div class="mb-3">
+            <label for="visit-date" class="form-label">Data odwiedzin:</label>
+            <input type="date" id="visit-date" class="form-control w-25 d-inline-block">
+        </div>
+
+        <!-- Przycisk zapisz -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary">Zapisz</button>
+        </div>
+    </div>
+
+</form>
+
 
 {% endblock %}

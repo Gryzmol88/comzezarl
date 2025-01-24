@@ -13,7 +13,5 @@ urlpatterns = [
     path('recipe/',views.recipe_page, name='recipe'),
     path('contact/',views.contact_page, name='contact'),
     path('newpost/',views.add_new_post, name='newpost'),
-
-    path('country_city_form', views.country_city_view, name='country_city_form'),
-    path('get-cities/<int:country_id>/', views.get_cities_by_country, name='get_cities_by_country'),
+    path('newpost/<int:country_id>/cities/', views.cities_by_country, name='cities_by_country'),
 ]
