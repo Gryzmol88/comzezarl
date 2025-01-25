@@ -3,16 +3,13 @@
 
 
 {% block content %}
-
-
 <form method="POST" action="{% url 'blog:newpost' %}">
     {% csrf_token %}
-
 
     <div class="container">
         <!-- Wybór kraju -->
         <div class="mb-3">
-            <label for="country-select" class="form-label">Wybierz kraj:</label>
+            <label for="country-select" class="form-label text-start w-100">Wybierz kraj:</label>
             <div class="input-group">
                 <!-- Przycisk Plus do dodania kraju -->
                 <button class="btn btn-outline-secondary custom-plus" type="button" id="add-country-btn">+</button>
@@ -27,7 +24,7 @@
 
         <!-- Wybór miasta -->
         <div class="mb-3">
-            <label for="city-select" class="form-label">Wybierz miasto:</label>
+            <label for="city-select" class="form-label text-start w-100">Wybierz miasto:</label>
             <div class="input-group">
                 <!-- Przycisk Plus do dodania miasta -->
                 <button class="btn btn-outline-secondary custom-plus" type="button" id="add-city-btn">+</button>
@@ -37,29 +34,157 @@
             </div>
         </div>
 
-        <!-- Pozostałe pola formularza -->
+        <!-- Nazwa restauracji -->
         <div class="mb-3">
-            <label for="restaurant-name" class="form-label">Nazwa restauracji:</label>
-            <input type="text" id="restaurant-name" class="form-control w-50 d-inline-block"
-                   placeholder="Wpisz nazwę restauracji">
+            <label for="restaurant-name" class="form-label text-start w-100">Nazwa restauracji:</label>
+            <input type="text" id="restaurant-name" name="restaurant_name" class="form-control w-50 d-inline-block" placeholder="Wpisz nazwę restauracji">
         </div>
 
+        <!-- Tytuł postu -->
         <div class="mb-3">
-            <label for="post-title" class="form-label">Tytuł postu:</label>
-            <input type="text" id="post-title" class="form-control w-50 d-inline-block" placeholder="Wpisz tytuł postu">
+            <label for="post-title" class="form-label text-start w-100">Tytuł postu:</label>
+            <input type="text" id="post-title" name="post_title" class="form-control w-50 d-inline-block" placeholder="Wpisz tytuł postu">
         </div>
 
+        <!-- Data odwiedzin -->
         <div class="mb-3">
-            <label for="visit-date" class="form-label">Data odwiedzin:</label>
-            <input type="date" id="visit-date" class="form-control w-25 d-inline-block">
+            <label for="visit-date" class="form-label text-start w-100">Data odwiedzin:</label>
+            <input type="date" id="visit-date" name="visit_date" class="form-control w-25 d-inline-block">
         </div>
+
+        <!-- Opis restauracji -->
+        <div class="mb-3">
+            <label for="restaurant-description" class="form-label text-start w-100">Opis restauracji:</label>
+            <textarea id="restaurant-description" name="restaurant_description" class="form-control w-75 d-inline-block" rows="3" placeholder="Opisz restaurację"></textarea>
+        </div>
+
+        <!-- Tekst posta -->
+        <div class="mb-3">
+            <label for="post-text" class="form-label text-start w-100">Tekst posta:</label>
+            <textarea id="post-text" name="post_text" class="form-control w-75 d-inline-block" rows="5" placeholder="Wpisz tekst posta"></textarea>
+        </div>
+
+        <!-- Ocena smaku -->
+<div class="mb-3">
+    <label class="form-label text-start w-100">Ocena smaku  (1-6):</label>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Kółka dla oceny -->
+        <div class="btn-group" role="group" aria-label="Ocena smaku">
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-1" value="1" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-1">1</label>
+
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-2" value="2" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-2">2</label>
+
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-3" value="3" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-3">3</label>
+
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-4" value="4" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-4">4</label>
+
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-5" value="5" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-5">5</label>
+
+            <input type="radio" class="btn-check" name="taste_rating" id="taste-6" value="6" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="taste-6">6</label>
+        </div>
+    </div>
+</div>
+
+        <!-- Ocena ceny -->
+ <div class="mb-3">
+    <label class="form-label">Ocena ceny (1-6):</label>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Kółka dla oceny -->
+        <div class="btn-group" role="group" aria-label="Ocena ceny">
+            <input type="radio" class="btn-check" name="price_rating" id="price-1" value="1" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-1">1</label>
+
+            <input type="radio" class="btn-check" name="price_rating" id="price-2" value="2" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-2">2</label>
+
+            <input type="radio" class="btn-check" name="price_rating" id="price-3" value="3" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-3">3</label>
+
+            <input type="radio" class="btn-check" name="price_rating" id="price-4" value="4" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-4">4</label>
+
+            <input type="radio" class="btn-check" name="price_rating" id="price-5" value="5" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-5">5</label>
+
+            <input type="radio" class="btn-check" name="price_rating" id="price-6" value="6" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="price-6">6</label>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Ocena restauracji -->
+<div class="mb-3">
+    <label class="form-label">Ocena restauracji  (1-6):</label>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Kółka dla oceny -->
+        <div class="btn-group" role="group" aria-label="Ocena restauracji">
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-1" value="1" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-1">1</label>
+
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-2" value="2" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-2">2</label>
+
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-3" value="3" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-3">3</label>
+
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-4" value="4" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-4">4</label>
+
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-5" value="5" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-5">5</label>
+
+            <input type="radio" class="btn-check" name="restaurant_rating" id="restaurant-6" value="6" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="restaurant-6">6</label>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Ocena ogólna -->
+<div class="mb-3">
+    <label class="form-label">Ocena ogólna  (1-6):</label>
+    <div class="d-flex gap-2 align-items-center">
+        <!-- Kółka dla oceny -->
+        <div class="btn-group" role="group" aria-label="Ocena ogólna">
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-1" value="1" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-1">1</label>
+
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-2" value="2" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-2">2</label>
+
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-3" value="3" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-3">3</label>
+
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-4" value="4" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-4">4</label>
+
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-5" value="5" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-5">5</label>
+
+            <input type="radio" class="btn-check" name="overall_rating" id="overall-6" value="6" autocomplete="off">
+            <label class="btn btn-outline-primary rounded-circle" for="overall-6">6</label>
+        </div>
+    </div>
+</div>
+
+
+
+
+
 
         <!-- Przycisk zapisz -->
         <div class="mb-3">
             <button type="submit" class="btn btn-primary">Zapisz</button>
         </div>
     </div>
-
 </form>
 
 

@@ -3,6 +3,12 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import City, Restaurant, Post, Country
 from .forms import PostForm
 from django.http import JsonResponse
+import logging
+
+
+
+# Utwórz logger
+logger = logging.getLogger(__name__)
 
 
 # Create your views here.
@@ -60,10 +66,13 @@ def add_new_post(request):
         post_title = request.POST.get('post_title')
         visit_date = request.POST.get('visit_date')
 
-        # Pobranie obiektu kraju
-        country = get_object_or_404(Country, id=country_id)
-        # Pobranie obiektu miasta (jeśli wybrane)
-        city = City.objects.get(id=city_id) if city_id else None
+        # # Pobranie obiektu kraju
+        # country = get_object_or_404(Country, id=country_id)
+        # # Pobranie obiektu miasta (jeśli wybrane)
+        # city = City.objects.get(id=city_id) if city_id else None
+
+
+        # Logowanie ID kraju do konsoli
 
         # Utworzenie nowego postu
         # post = Post.objects.create(
@@ -75,7 +84,7 @@ def add_new_post(request):
         # )
 
         # Przekierowanie lub renderowanie po zapisaniu
-        return redirect('blog/post/news.html')  # Zmień to na odpowiednią stronę
+        return redirect('blog:news')  # Zmień to na odpowiednią stronę
 
     # Jeśli nie POST, renderowanie formularza z listą krajów
     countries = Country.objects.all()
