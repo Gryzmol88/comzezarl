@@ -59,6 +59,7 @@ def contact_page(request):
 
 def add_new_post(request):
     if request.method == 'POST':
+        print(f'Zaczynam POST')
         # Odczytanie danych z formularza
         country_id = request.POST.get('country')
         city_id = request.POST.get('city')
@@ -84,6 +85,7 @@ def add_new_post(request):
         # )
 
         # Przekierowanie lub renderowanie po zapisaniu
+        print(f'Koncze  POST')
         return redirect('blog:news')  # Zmień to na odpowiednią stronę
 
     # Jeśli nie POST, renderowanie formularza z listą krajów
@@ -91,7 +93,9 @@ def add_new_post(request):
     return render(request, 'blog/post/new_post.html', {'countries': countries})
 
 def cities_by_country(request, country_id):
+    print(f'Zaczynam cities_by_country')
     country = get_object_or_404(Country, id=country_id)
     cities = country.cities.all()
     cities_data = [{'id': city.id, 'name': city.name} for city in cities]
+    print(f'Koncze cities_by_country')
     return JsonResponse({'cities': cities_data})
