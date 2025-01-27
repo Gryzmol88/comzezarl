@@ -3,7 +3,8 @@
 
 
 {% block content %}
-<form method="POST" action="{% url 'blog:newpost' %}">
+{% include "blog/modal/add_country_modal.html" %}
+<form method="POST" action="{% url 'blog:add_new_post' %}">
     {% csrf_token %}
 
     <div class="container">
@@ -12,8 +13,8 @@
             <label for="country-select" class="form-label text-start w-100">Wybierz kraj:</label>
             <div class="input-group">
                 <!-- Przycisk Plus do dodania kraju -->
-                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-country-btn">+</button>
-                <select id="country-select" class="form-select w-50 d-inline-block">
+                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-country-btn" data-url="{% url 'blog:load_add_country_modal' %}">+</button>
+                <select id="country-select"  name="country" class="form-select w-50 d-inline-block">
                     <option value="">-- Wybierz kraj --</option>
                     {% for country in countries %}
                     <option value="{{ country.id }}">{{ country.name }}</option>
@@ -28,7 +29,7 @@
             <div class="input-group">
                 <!-- Przycisk Plus do dodania miasta -->
                 <button class="btn btn-outline-secondary custom-plus" type="button" id="add-city-btn">+</button>
-                <select id="city-select" class="form-select w-50 d-inline-block" disabled>
+                <select id="city-select" name="city" class="form-select w-50 d-inline-block" disabled>
                     <option value="">-- Najpierw wybierz kraj --</option>
                 </select>
             </div>

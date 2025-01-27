@@ -39,3 +39,92 @@ $(document).ready(function () {
         });
     });
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const addCountryButton = document.getElementById("add-country-btn");
+
+    if (addCountryButton) {
+        addCountryButton.addEventListener("click", function () {
+            const url = addCountryButton.getAttribute("data-url");
+
+            fetch(url)
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error("Błąd podczas ładowania modala.");
+                    }
+                    return response.text();
+                })
+                .then((html) => {
+                    // Dodaj modal do DOM
+                    const modalContainer = document.createElement("div");
+                    modalContainer.innerHTML = html;
+                    document.body.appendChild(modalContainer);
+
+                    // Pokaż modal
+                    const modal = new bootstrap.Modal(modalContainer.querySelector(".modal"));
+                    modal.show();
+
+                    // Obsługa kliknięcia przycisku "Zapisz"
+                    const saveButton = modalContainer.querySelector("#saveCountryButton");
+                    saveButton.addEventListener("click", function () {
+                        const countryName = modalContainer.querySelector("#newCountryName").value;
+
+                        if (!countryName) {
+                            modalContainer.querySelector("#addCountryError").classList.remove("d-none");
+                            return;
+                        }
+
+                        // Wyślij dane do serwera (AJAX)
+                        fetch(saveButton.getAttribute("data-url"), {  // Zmieniony URL
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "X-CSRFToken": getCookie("csrftoken"), // Upewnij się, że csrf jest poprawnie ustawione
+                            },
+                            body: JSON.stringify({
+                                name: countryName
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert(`Dodano kraj: ${data.country_name}`);
+                                modal.hide();
+                            } else {
+                                modalContainer.querySelector("#addCountryError").classList.remove("d-none");
+                            }
+                        })
+                        .catch(error => {
+                            console.error("Błąd przy dodawaniu kraju:", error);
+                            alert("Błąd przy dodawaniu kraju.");
+                        });
+                    });
+
+                    // Usuń modal z DOM po jego zamknięciu
+                    modalContainer.querySelector(".modal").addEventListener("hidden.bs.modal", function () {
+                        modalContainer.remove();
+                    });
+                })
+                .catch((error) => {
+                    console.error("Nie udało się załadować modala:", error);
+                    alert("Nie udało się załadować modala.");
+                });
+        });
+    }
+});
+
+// Funkcja do pobierania tokenu CSRF z ciasteczek
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + "=")) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}

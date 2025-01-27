@@ -1,0 +1,23 @@
+<div class="modal fade" id="addCountryModal" tabindex="-1" aria-labelledby="addCountryModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCountryModalLabel">Dodaj nowy kraj</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Zamknij"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="newCountryName" class="form-label">Nazwa kraju</label>
+            <input type="text" class="form-control" name="name" id="newCountryName" placeholder="Wpisz nazwę kraju" required>
+          </div>
+          <div id="addCountryError" class="text-danger d-none">Błąd dodawania kraju!</div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Anuluj</button>
+        <button type="button" class="btn btn-primary" data-url="{% url 'blog:add_country' %}" id="saveCountryButton">Zapisz</button>
+      </div>
+    </div>
+  </div>
+</div>
