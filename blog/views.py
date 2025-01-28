@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.context_processors import request
+from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
 from .models import City, Restaurant, Post, Country
@@ -73,7 +75,6 @@ def add_new_post(request):
         # # Pobranie obiektu miasta (jeśli wybrane)
         city = City.objects.get(id=city_id) if city_id else None
 
-        print(f'Kraj: {country.name} Miasto: {city.name} Nazwa restauracji: {restaurant_name} Tytuł posta: {post_title} Data zamieszczenia: {visit_date}')
         # Logowanie ID kraju do konsoli
 
         # Utworzenie nowego postu
@@ -110,13 +111,24 @@ def accept_new_post(request):
 
 def add_country(request):
     if request.method == "POST":
-        country_name = request.POST.get("name", "").strip()
-        if country_name:
-            # Tworzenie nowego kraju
-            new_country = Country.objects.create(name=country_name)
-            return JsonResponse({"success": True, "country_id": new_country.id, "country_name": new_country.name})
-        else:
-            return JsonResponse({"success": False, "error": "Nazwa kraju nie może być pusta."}, status=400)
+        try:
+            # Odczytanie danych JSON z request.body
+            data = json.loads(request.body)
+            country_name = data.get("name", "").strip()
+
+            if country_name:
+                # Tworzenie nowego kraju
+                new_country = Country.objects.create(name=country_name)
+                return JsonResponse({
+                    "success": True,
+                    "country_id": new_country.id,
+                    "country_name": new_country.name,
+                })
+
+            else:
+                return JsonResponse({"success": False, "error": "Nazwa kraju nie może być pusta."}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "error": "Niepoprawny format JSON."}, status=400)
     return JsonResponse({"success": False, "error": "Nieprawidłowa metoda."}, status=405)
 
 
