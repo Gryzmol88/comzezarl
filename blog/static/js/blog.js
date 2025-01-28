@@ -28,7 +28,7 @@ $(document).ready(function () {
                     cities.forEach(city => {
                         citySelect.append(`<option value="${city.id}">${city.name}</option>`);
                     });
-                }
+                 }
 
                 // Włącz listę miast
                 citySelect.prop("disabled", false);
@@ -88,8 +88,17 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert(`Dodano kraj: ${data.country_name}`);
+                                // Dodanie nowego kraju do listy rozwijanej
+                                const countrySelect = document.getElementById("country-select"); // ID pola <select>
+                                const newOption = new Option(data.country_name, data.country_id, false, true); // false = niewybrane, true = ustaw wybrany
+                                countrySelect.add(newOption);
+
+                                // Zamknij modal
+                                const modal = bootstrap.Modal.getInstance(modalContainer.querySelector(".modal"));
                                 modal.hide();
+
+                                // Opcjonalne przewinięcie do nowego elementu (użytkownik od razu widzi nowy kraj)
+                                countrySelect.scrollIntoView({ behavior: "smooth" });
                             } else {
                                 modalContainer.querySelector("#addCountryError").classList.remove("d-none");
                             }
