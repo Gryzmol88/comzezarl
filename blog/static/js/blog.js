@@ -28,7 +28,7 @@ $(document).ready(function () {
                     cities.forEach(city => {
                         citySelect.append(`<option value="${city.id}">${city.name}</option>`);
                     });
-                 }
+                }
 
                 // Włącz listę miast
                 citySelect.prop("disabled", false);
