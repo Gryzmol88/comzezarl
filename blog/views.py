@@ -135,3 +135,33 @@ def add_country(request):
 
 def load_add_country_modal(request):
     return render(request, "blog/modal/add_country_modal.html")
+
+
+def add_city(request):
+    if request.method == "POST":
+        try:
+            # Odczytanie danych JSON z request.body
+            data = json.loads(request.body)
+            city_name = data.get("name", "").strip()
+            country_id = data.get("country_id")
+
+            if city_name and country_id:
+                # Pobranie kraju
+                country = get_object_or_404(Country, id=country_id)
+
+                # Tworzenie nowego miasta
+                new_city = City.objects.create(name=city_name, country=country)
+                return JsonResponse({
+                    "success": True,
+                    "city_id": new_city.id,
+                    "city_name": new_city.name,
+                })
+            else:
+                return JsonResponse({"success": False, "error": "Nazwa miasta i kraj są wymagane."}, status=400)
+        except json.JSONDecodeError:
+            return JsonResponse({"success": False, "error": "Niepoprawny format JSON."}, status=400)
+    return JsonResponse({"success": False, "error": "Nieprawidłowa metoda."}, status=405)
+
+
+def load_add_city_modal(request):
+    return render(request, "blog/modal/add_city_modal.html")
