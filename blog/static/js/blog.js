@@ -234,7 +234,5 @@ $(document).ready(function () {
                 console.error("Nie udało się załadować modala:", error);
                 alert("Nie udało się załadować modala.");
             });
-
     });
-
 });
