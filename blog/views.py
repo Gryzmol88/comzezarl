@@ -94,7 +94,7 @@ def add_new_post(request):
     countries = Country.objects.all()
     return render(request, 'blog/post/new_post.html', {'countries': countries})
 
-def cities_by_country(request, country_id):
+def cities_by_country(country_id):
     country = get_object_or_404(Country, id=country_id)
     cities = country.cities.all()
     cities_data = [{'id': city.id, 'name': city.name} for city in cities]
