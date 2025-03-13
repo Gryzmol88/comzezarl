@@ -123,3 +123,19 @@ def add_country(request):
 
 def load_add_country_modal(request):
     return render(request, "blog/modal/add_country_modal.html")
+
+def add_city(request):
+    if request.method == "POST":
+        city_name = request.POST.get("name", "").strip()
+        if city_name:
+            # Tworzenie nowego kraju
+            new_city = Country.objects.create(name=city_name)
+
+            return JsonResponse({"success": True, "city_id": new_city.id, "city_name": new_city.name})
+        else:
+            return JsonResponse({"success": False, "error": "Nazwa miasta nie może być pusta."}, status=400)
+    return JsonResponse({"success": False, "error": "Nieprawidłowa metoda."}, status=405)
+
+def load_add_city_modal(request):
+    print("jestem w load city")
+    return render(request, "blog/modal/add_city_modal.html")

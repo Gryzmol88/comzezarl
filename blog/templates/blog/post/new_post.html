@@ -7,6 +7,7 @@
 <form method="POST" action="{% url 'blog:add_new_post' %}">
     {% csrf_token %}
 
+
     <div class="container">
         <!-- Wybór kraju -->
         <div class="mb-3">
@@ -22,13 +23,12 @@
                 </select>
             </div>
         </div>
-
         <!-- Wybór miasta -->
         <div class="mb-3">
             <label for="city-select" class="form-label text-start w-100">Wybierz miasto:</label>
             <div class="input-group">
                 <!-- Przycisk Plus do dodania miasta -->
-                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-city-btn">+</button>
+                <button class="btn btn-outline-secondary custom-plus" type="button" id="add-city-btn" data-url="{% url 'blog:load_add_city_modal' %}">+</button>
                 <select id="city-select" name="city" class="form-select w-50 d-inline-block" disabled>
                     <option value="">-- Najpierw wybierz kraj --</option>
                 </select>

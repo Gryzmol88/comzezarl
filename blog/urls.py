@@ -17,5 +17,7 @@ urlpatterns = [
     path('accept_new_post/',views.accept_new_post, name='accept_new_post'),
     path("load_add_country_modal/", views.load_add_country_modal, name="load_add_country_modal"),
     path("add_country/", views.add_country, name="add_country"),
+    path("load_add_city_modal/", views.load_add_city_modal, name="load_add_city_modal"),
+    path("add_city/", views.add_city, name="add_city"),
 
 ]
