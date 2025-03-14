@@ -110,7 +110,8 @@ def accept_new_post(request):
 
 def add_country(request):
     if request.method == "POST":
-        country_name = request.POST.get("name", "").strip()
+        data = json.loads(request.body)
+        country_name = data.get("name", "").strip()
         if country_name:
             # Tworzenie nowego kraju
             new_country = Country.objects.create(name=country_name)
@@ -126,10 +127,14 @@ def load_add_country_modal(request):
 
 def add_city(request):
     if request.method == "POST":
-        city_name = request.POST.get("name", "").strip()
+        data = json.loads(request.body)
+        city_name = data.get("cityName", "").strip()
+        country_id = data.get("countryId", "").strip()
+        print(f'Nazwa miasta: {city_name} nazwa kraju: {country_id}')
         if city_name:
-            # Tworzenie nowego kraju
-            new_city = Country.objects.create(name=city_name)
+            # Tworzenie nowego miasta
+            new_city = City.objects.create(name=city_name, country_id=country_id)
+
 
             return JsonResponse({"success": True, "city_id": new_city.id, "city_name": new_city.name})
         else:
@@ -137,5 +142,4 @@ def add_city(request):
     return JsonResponse({"success": False, "error": "Nieprawidłowa metoda."}, status=405)
 
 def load_add_city_modal(request):
-    print("jestem w load city")
     return render(request, "blog/modal/add_city_modal.html")

@@ -8,9 +8,12 @@ $(document).ready(function () {
         citySelect.empty();
         citySelect.append('<option value="">-- Wybierz miasto --</option>');
 
+        //TODO Wylaczyc dodawanie miasta jeżeli nie wybrano kraju $("#add-city-btn").prop("disabled", true);
         // Jeśli nie wybrano kraju, wyłącz listę miast
         if (!countryId) {
             citySelect.prop("disabled", true);
+
+
             return;
         }
 
@@ -90,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert(`Dodano kraj: ${data.country_name}`);
                                 modal.hide();
                             } else {
                                 modalContainer.querySelector("#addCountryError").classList.remove("d-none");
@@ -111,7 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     console.error("Nie udało się załadować modala:", error);
                     alert("Nie udało się załadować modala.");
                 });
-        });
+        })
     }
 });
 
@@ -123,6 +125,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (addCityButton) {
         addCityButton.addEventListener("click", function () {
             const url = addCityButton.getAttribute("data-url");
+
+
+            let countryId = $("#country-select").val(); // Pobiera wartość pola Country
+
 
             fetch(url)
                 .then((response) => {
@@ -144,7 +150,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     // Obsługa kliknięcia przycisku "Zapisz"
                     const saveButton = modalContainer.querySelector("#saveCityButton");
                     saveButton.addEventListener("click", function () {
-                        const countryName = modalContainer.querySelector("#newCityName").value;
+                        const cityName = modalContainer.querySelector("#newCityName").value;
 
                         if (!cityName) {
                             modalContainer.querySelector("#addCityError").classList.remove("d-none");
@@ -159,13 +165,13 @@ document.addEventListener("DOMContentLoaded", function () {
                                 "X-CSRFToken": getCookie("csrftoken"), // Upewnij się, że csrf jest poprawnie ustawione
                             },
                             body: JSON.stringify({
-                                name: countryName
+                                cityName: cityName,
+                                countryId: countryId
                             })
                         })
                         .then(response => response.json())
                         .then(data => {
                             if (data.success) {
-                                alert(`Dodano kraj: ${data.country_name}`);
                                 modal.hide();
                             } else {
                                 modalContainer.querySelector("#addCityError").classList.remove("d-none");
