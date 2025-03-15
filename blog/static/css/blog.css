@@ -98,3 +98,9 @@ li::marker {
         background-color: #099104;
         color: white;
     }
+
+#add-city-btn:disabled {
+    background-color: #ffcccc !important; /* Jasnoczerwone tło */
+    color: #ffffff; /* Biały tekst */
+    border-color: #ff9999; /* Dopasowanie koloru obramowania */
+}

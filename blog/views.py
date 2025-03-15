@@ -94,9 +94,7 @@ def add_new_post(request):
     return render(request, 'blog/post/new_post.html', {'countries': countries})
 
 def cities_by_country(request, country_id):
-    print(country_id)
     country = get_object_or_404(Country, id=country_id)
-    print(country.name)
     cities = country.cities.all()
     cities_data = [{'id': city.id, 'name': city.name} for city in cities]
 
@@ -132,7 +130,6 @@ def add_city(request):
         data = json.loads(request.body)
         city_name = data.get("cityName", "").strip()
         country_id = data.get("countryId", "").strip()
-        print(f'Nazwa miasta: {city_name} nazwa kraju: {country_id}')
         if city_name:
             # Tworzenie nowego miasta
             new_city = City.objects.create(name=city_name, country_id=country_id)

@@ -1,19 +1,25 @@
 //Dynamiczne ładowanie listy miast po wybraniu kraju
 $(document).ready(function () {
-    $("#country-select").change(function () {
-        const countryId = $(this).val(); // Pobieramy ID wybranego kraju
+
+        //TODO Po wpisaniu kraju, niech będzie od razu wybrany z listy tak samo z miastem
+        const countrySelect = $("#country-select");
         const citySelect = $("#city-select");
+        const addCityBtn = $("#add-city-btn");
+
+
+
+    countrySelect.change(function () {
+        const countryId = $(this).val(); // Pobieramy ID wybranego kraju
 
         // Wyczyść listę miast
         citySelect.empty();
         citySelect.append('<option value="">-- Wybierz miasto --</option>');
 
-        //TODO Wylaczyc dodawanie miasta jeżeli nie wybrano kraju $("#add-city-btn").prop("disabled", true);
-        //TODO Po wpisaniu kraju, niech będzie od razu wybrany z listy tak samo z miastem
+
         // Jeśli nie wybrano kraju, wyłącz listę miast
         if (!countryId) {
             citySelect.prop("disabled", true);
-
+            addCityBtn.prop("disabled", true);
 
             return;
         }
@@ -37,6 +43,7 @@ $(document).ready(function () {
 
                 // Włącz listę miast
                 citySelect.prop("disabled", false);
+                addCityBtn.prop("disabled", false);
             },
             error: function () {
                 alert("Wystąpił błąd podczas ładowania miast.");
