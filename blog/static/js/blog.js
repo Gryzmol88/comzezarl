@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
         addCountryButton.addEventListener("click", function () {
             const url = addCountryButton.getAttribute("data-url");
 
+
             fetch(url)
                 .then((response) => {
                     if (!response.ok) {
@@ -102,6 +103,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then(data => {
                             if (data.success) {
                                 modal.hide();
+                                //TODO Funkcja nie działa prawidłoo
+                                                                // Dodaj nowe miasto do listy rozwijanej
+                                const countrySelect = document.getElementById("country-select");
+                                const newOption = document.createElement("option");
+                                newOption.value = data.countryId;  // ID nowego kraju zwrócone z serwera
+                                newOption.textContent = countryName;
+                                newOption.selected = true; // Ustaw jako wybrane
+
+                                countrySelect.appendChild(newOption); // Dodaj do listy
+                                //KONIEC
                             } else {
                                 modalContainer.querySelector("#addCountryError").classList.remove("d-none");
                             }
