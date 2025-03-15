@@ -9,6 +9,7 @@ $(document).ready(function () {
         citySelect.append('<option value="">-- Wybierz miasto --</option>');
 
         //TODO Wylaczyc dodawanie miasta jeżeli nie wybrano kraju $("#add-city-btn").prop("disabled", true);
+        //TODO Po wpisaniu kraju, niech będzie od razu wybrany z listy tak samo z miastem
         // Jeśli nie wybrano kraju, wyłącz listę miast
         if (!countryId) {
             citySelect.prop("disabled", true);
