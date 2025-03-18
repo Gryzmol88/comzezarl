@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
@@ -68,22 +70,37 @@ def add_new_post(request):
         restaurant_name = request.POST.get('restaurant_name')
         post_title = request.POST.get('post_title')
         visit_date = request.POST.get('visit_date')
+        post_text = request.POST.get('post_text')
+        price_rating = request.POST.get('price_rating')
+        restaurant_rating = request.POST.get('restaurant_rating')
+        overall_rating = request.POST.get('overall_rating')
+        taste_rating = request.POST.get('taste_rating')
+        restaurant_description = request.POST.get('restaurant_description')
         # # Pobranie obiektu kraju
         country = get_object_or_404(Country, id=country_id)
         # # Pobranie obiektu miasta (jeśli wybrane)
         city = City.objects.get(id=city_id) if city_id else None
+        # TODO Dodać wyszukanie jeżeli podana nazwa restauracji znajduje sie już w bazie
+        restaurant = Restaurant.objects.create(
+                city = city,
+                name = restaurant_name,
+                description = restaurant_description,
+                    )
 
-        print(f'Kraj: {country.name} Miasto: {city.name} Nazwa restauracji: {restaurant_name} Tytuł posta: {post_title} Data zamieszczenia: {visit_date}')
-        # Logowanie ID kraju do konsoli
 
-        # Utworzenie nowego postu
-        # post = Post.objects.create(
-        #     country=country,
-        #     city=city,
-        #     restaurant_name=restaurant_name,
-        #     title=post_title,
-        #     visit_date=visit_date
-        # )
+
+       # Utworzenie nowego postu
+        post = Post.objects.create(
+            title=post_title,
+        body = post_text,
+        created = datetime.now(),
+        restaurant = restaurant,
+        visit_date = visit_date,
+        taste_rating = taste_rating,
+        price_rating = price_rating,
+        restaurant_rating =restaurant_rating,
+        overall_rating =overall_rating
+        )
 
         # Przekierowanie lub renderowanie po zapisaniu
 
