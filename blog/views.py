@@ -159,3 +159,17 @@ def add_city(request):
 
 def load_add_city_modal(request):
     return render(request, "blog/modal/add_city_modal.html")
+
+
+
+# def upload_photo(request):
+#     if request.method == 'POST':
+#         form = PhotoForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('upload_photo')  # Po przesłaniu wróć do strony
+#     else:
+#         form = PhotoForm()
+#
+#     photos = Photo.objects.all()
+#     return render(request, 'upload.html', {'form': form, 'photos': photos})
