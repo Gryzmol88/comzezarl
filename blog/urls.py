@@ -19,5 +19,5 @@ urlpatterns = [
     path("add_country/", views.add_country, name="add_country"),
     path("load_add_city_modal/", views.load_add_city_modal, name="load_add_city_modal"),
     path("add_city/", views.add_city, name="add_city"),
-
+    path("upload_photo/",views.upload_photo, name="upload_photo"),
 ]

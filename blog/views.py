@@ -1,5 +1,8 @@
+import os
 from datetime import datetime
 
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 
@@ -76,6 +79,7 @@ def add_new_post(request):
         overall_rating = request.POST.get('overall_rating')
         taste_rating = request.POST.get('taste_rating')
         restaurant_description = request.POST.get('restaurant_description')
+
         # # Pobranie obiektu kraju
         country = get_object_or_404(Country, id=country_id)
         # # Pobranie obiektu miasta (jeśli wybrane)
@@ -105,6 +109,7 @@ def add_new_post(request):
         # Przekierowanie lub renderowanie po zapisaniu
 
         return redirect('blog:accept_new_post')  # Zmień to na odpowiednią stronę
+        #return redirect('blog:upload_photo')
 
     # Jeśli nie POST, renderowanie formularza z listą krajów
     countries = Country.objects.all()
@@ -161,15 +166,20 @@ def load_add_city_modal(request):
     return render(request, "blog/modal/add_city_modal.html")
 
 
+@csrf_exempt  # Wyłącz CSRF dla testów, ale zabezpiecz w produkcji
+def upload_photo(request):
+    if request.method == 'POST' and request.FILES.get('image'):
 
-# def upload_photo(request):
-#     if request.method == 'POST':
-#         form = PhotoForm(request.POST, request.FILES)
-#         if form.is_valid():
-#             form.save()
-#             return redirect('upload_photo')  # Po przesłaniu wróć do strony
-#     else:
-#         form = PhotoForm()
-#
-#     photos = Photo.objects.all()
-#     return render(request, 'upload.html', {'form': form, 'photos': photos})
+        image = request.FILES['formFileMultiple']
+        file_path = os.path.join('media/', image.name)
+        print(image)
+        print( type(image))
+        # Zapisz plik na serwerze
+        file_name = default_storage.save(file_path, ContentFile(image.read()))
+        file_url = default_storage.url(file_name)
+
+        return JsonResponse({'message': 'Upload successful', 'file_url': file_url})
+
+    return JsonResponse({'error': 'Invalid request'}, status=400)
+
+
