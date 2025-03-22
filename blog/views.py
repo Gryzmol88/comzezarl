@@ -7,7 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
 
-from .models import City, Restaurant, Post, Country
+from .models import City, Restaurant, Post, Country, Image
 from .forms import PostForm
 from django.http import JsonResponse
 import logging
@@ -175,13 +175,38 @@ def upload_photo(request):
 
         images = request.FILES.getlist('formFileMultiple')  # Obsługa wielu plików
 
+        # post = Post.objects.filter(post=post)
         for image in images:
             file_path = os.path.join(settings.MEDIA_ROOT,datetime.now().strftime('%Y/%m/%d'), image.name)
             print(file_path)
             default_storage.save(file_path, ContentFile(image.read()))  # Zapis pliku
+
+            #TODO Dodawanie obiektu image i wiazanie go z konkretnym postem
+
+            # # Utworzenie nowego postu
+            # new_image = Image.objects.create(
+            #     image=image,
+            # add_date = datetime.now(),
+            # title ="",
+            # object_id = obcy klucz ddo posta którego się odnosci
+            # content_type = 'Blog:post'
+            #
+            # )
+
+
 
 
         return redirect('blog:accept_new_post')  # Zmień to na odpowiednią stronę
 
 
     return render(request, 'blog/post/upload_photo.html')
+
+
+def post_detail(request, post_id):
+    # Pobierz post o danym id, jeśli nie istnieje, zwróć 404
+    post = get_object_or_404(Post, pk=post_id)
+    images = Image.objects.filter(post=post)  # Pobieranie zdjęć powiązanych z postem
+
+
+    # Przekaż post do szablonu
+    return render(request, 'blog/post/post_detail.html', {'post': post, 'images':images})

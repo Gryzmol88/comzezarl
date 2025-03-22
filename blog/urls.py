@@ -22,6 +22,7 @@ urlpatterns = [
     path("load_add_city_modal/", views.load_add_city_modal, name="load_add_city_modal"),
     path("add_city/", views.add_city, name="add_city"),
     path("upload_photo/",views.upload_photo, name="upload_photo"),
+    path('post/<int:post_id>/', views.post_detail, name='post_detail'),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
