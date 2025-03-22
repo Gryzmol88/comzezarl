@@ -1,9 +1,12 @@
+from django.conf import settings
 from django.db import models
 from django.db.models import TextField, ForeignKey
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 
 
+# TODO //TODO Warning M:\Michal\Programowanie\pythonProject\comZezarl\venv\Lib\site-packages\django\db\models\fields\__init__.py:1665: RuntimeWarning: DateTimeField Post.visit_date received a naive datetime (2025-03-12 00:00:00) while time zone support is active.
+#   warnings.warn(
 
 class Country(models.Model):
     name = models.CharField(max_length=100)
@@ -43,22 +46,6 @@ class Restaurant(models.Model):
         return f'Restauracja: {self.name}'
 
 
-class Image(models.Model):
-    add_date = models.DateField()
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(max_length=200, blank=True)
-    image =models.ImageField(upload_to='images/%Y/%m/%d')
-    #GenericForeignKey
-    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # Model docelowy
-    object_id = models.PositiveIntegerField()  # ID obiektu docelowego
-    content_object = GenericForeignKey('content_type', 'object_id')  # Łączy content_type i object_id
-    slug = models.SlugField(max_length=200, blank=True)
-
-    class Meta:
-        ordering = ('title',)
-
-    def __str__(self):
-        return f'Tytul: {self.title}'
 
 
 class Recipe(models.Model):
@@ -115,3 +102,19 @@ class Post(models.Model):
     def get_overall_rating_display(self):
         return dict(self.RATE).get(self.overall_rating, "Brak oceny")
 
+class Image(models.Model):
+    image =models.ImageField()
+    add_date = models.DateField()
+    title = models.CharField(max_length=100)
+    post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    #GenericForeignKey
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # Model docelowy
+    object_id = models.PositiveIntegerField()  # ID obiektu docelowego
+    content_object = GenericForeignKey('content_type', 'object_id')  # Łączy content_type i object_id
+    slug = models.SlugField(max_length=200, blank=True)
+
+    class Meta:
+        ordering = ('title',)
+
+    def __str__(self):
+        return f'Tytul: {self.title}'

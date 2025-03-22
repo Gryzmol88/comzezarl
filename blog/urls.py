@@ -1,6 +1,8 @@
 from django.urls import path
 from django.contrib import admin
 from . import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 app_name = 'blog'
 
@@ -21,3 +23,5 @@ urlpatterns = [
     path("add_city/", views.add_city, name="add_city"),
     path("upload_photo/",views.upload_photo, name="upload_photo"),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

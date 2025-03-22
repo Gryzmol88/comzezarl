@@ -5,13 +5,13 @@ from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
+from django.conf import settings
 
 from .models import City, Restaurant, Post, Country
 from .forms import PostForm
 from django.http import JsonResponse
 import logging
 import json
-
 
 
 # Utwórz logger
@@ -108,7 +108,7 @@ def add_new_post(request):
 
         # Przekierowanie lub renderowanie po zapisaniu
 
-        return redirect('blog:accept_new_post')  # Zmień to na odpowiednią stronę
+        return redirect('blog:upload_photo')  # Zmień to na odpowiednią stronę
         #return redirect('blog:upload_photo')
 
     # Jeśli nie POST, renderowanie formularza z listą krajów
@@ -166,20 +166,22 @@ def load_add_city_modal(request):
     return render(request, "blog/modal/add_city_modal.html")
 
 
-@csrf_exempt  # Wyłącz CSRF dla testów, ale zabezpiecz w produkcji
+
 def upload_photo(request):
-    if request.method == 'POST' and request.FILES.get('image'):
+    if request.method == 'POST':
 
-        image = request.FILES['formFileMultiple']
-        file_path = os.path.join('media/', image.name)
-        print(image)
-        print( type(image))
-        # Zapisz plik na serwerze
-        file_name = default_storage.save(file_path, ContentFile(image.read()))
-        file_url = default_storage.url(file_name)
+        if 'formFileMultiple' not in request.FILES:
+            return JsonResponse({'error': 'Nie przesłano pliku!'}, status=400)
 
-        return JsonResponse({'message': 'Upload successful', 'file_url': file_url})
+        images = request.FILES.getlist('formFileMultiple')  # Obsługa wielu plików
 
-    return JsonResponse({'error': 'Invalid request'}, status=400)
+        for image in images:
+            file_path = os.path.join(settings.MEDIA_ROOT,datetime.now().strftime('%Y/%m/%d'), image.name)
+            print(file_path)
+            default_storage.save(file_path, ContentFile(image.read()))  # Zapis pliku
 
 
+        return redirect('blog:accept_new_post')  # Zmień to na odpowiednią stronę
+
+
+    return render(request, 'blog/post/upload_photo.html')
