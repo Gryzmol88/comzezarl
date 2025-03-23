@@ -106,6 +106,7 @@ class Image(models.Model):
     image =models.ImageField()
     add_date = models.DateField()
     title = models.CharField(max_length=100)
+    #TODO Usunac post i dodac migracje
     post = models.ForeignKey(Post,on_delete=models.CASCADE)
     #GenericForeignKey
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)  # Model docelowy

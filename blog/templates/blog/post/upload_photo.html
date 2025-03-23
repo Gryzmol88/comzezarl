@@ -6,7 +6,7 @@
 {% include "blog/modal/add_country_modal.html" %}
 
 
-<form method="POST" action="{% url 'blog:upload_photo' %}" enctype="multipart/form-data">
+<form method="POST" action="{% url 'blog:upload_photo' post_id=post.id %}" enctype="multipart/form-data">
     {% csrf_token %}
 
 

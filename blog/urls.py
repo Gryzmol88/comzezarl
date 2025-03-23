@@ -21,7 +21,7 @@ urlpatterns = [
     path("add_country/", views.add_country, name="add_country"),
     path("load_add_city_modal/", views.load_add_city_modal, name="load_add_city_modal"),
     path("add_city/", views.add_city, name="add_city"),
-    path("upload_photo/",views.upload_photo, name="upload_photo"),
+    path("upload_photo/<int:post_id>/",views.upload_photo, name="upload_photo"),
     path('post/<int:post_id>/', views.post_detail, name='post_detail'),
 ]
 if settings.DEBUG:

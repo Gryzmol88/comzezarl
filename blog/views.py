@@ -1,17 +1,19 @@
 import os
 from datetime import datetime
 
+from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.csrf import csrf_exempt
 from django.conf import settings
-
+from PIL import Image as PILImage
 from .models import City, Restaurant, Post, Country, Image
 from .forms import PostForm
 from django.http import JsonResponse
 import logging
 import json
+from io import BytesIO
 
 
 # Utwórz logger
@@ -105,10 +107,10 @@ def add_new_post(request):
         restaurant_rating =restaurant_rating,
         overall_rating =overall_rating
         )
-
+        post_id = post.id
         # Przekierowanie lub renderowanie po zapisaniu
 
-        return redirect('blog:upload_photo')  # Zmień to na odpowiednią stronę
+        return redirect(f'/upload_photo/{post_id}/')  # Zmień to na odpowiednią stronę
         #return redirect('blog:upload_photo')
 
     # Jeśli nie POST, renderowanie formularza z listą krajów
@@ -167,7 +169,10 @@ def load_add_city_modal(request):
 
 
 
-def upload_photo(request):
+def upload_photo(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+
+
     if request.method == 'POST':
 
         if 'formFileMultiple' not in request.FILES:
@@ -175,7 +180,6 @@ def upload_photo(request):
 
         images = request.FILES.getlist('formFileMultiple')  # Obsługa wielu plików
 
-        # post = Post.objects.filter(post=post)
         for image in images:
             file_path = os.path.join(settings.MEDIA_ROOT,datetime.now().strftime('%Y/%m/%d'), image.name)
             print(file_path)
@@ -183,30 +187,47 @@ def upload_photo(request):
 
             #TODO Dodawanie obiektu image i wiazanie go z konkretnym postem
 
-            # # Utworzenie nowego postu
-            # new_image = Image.objects.create(
-            #     image=image,
-            # add_date = datetime.now(),
-            # title ="",
-            # object_id = obcy klucz ddo posta którego się odnosci
-            # content_type = 'Blog:post'
-            #
-            # )
+            # Utworzenie nowego postu
+            new_image = Image.objects.create(
+                image=image,
+            add_date = datetime.now(),
+            title ="",
+                post = post,
+            object_id = post.id,
+            content_type = ContentType.objects.get_for_model(Post)
 
-
-
+            )
 
         return redirect('blog:accept_new_post')  # Zmień to na odpowiednią stronę
 
 
-    return render(request, 'blog/post/upload_photo.html')
+    return render(request, 'blog/post/upload_photo.html', {'post': post})
 
 
 def post_detail(request, post_id):
     # Pobierz post o danym id, jeśli nie istnieje, zwróć 404
     post = get_object_or_404(Post, pk=post_id)
     images = Image.objects.filter(post=post)  # Pobieranie zdjęć powiązanych z postem
+    resized_images = []
 
+    for image in images:
+        img = PILImage.open(image.image)
+        img = img.convert('RGB')  # Upewnij się, że obraz jest w formacie RGB
+
+        # Zdefiniuj pożądaną szerokość
+        base_width = 800
+        w_percent = (base_width / float(img.size[0]))  # Oblicz proporcjonalnie
+        h_size = int((float(img.size[1]) * float(w_percent)))
+
+        img = img.resize((base_width, h_size), PILImage.Resampling.LANCZOS)
+
+        # Zapisz zmieniony obraz do pamięci (BytesIO)
+        temp_file = BytesIO()
+        img.save(temp_file, format='JPEG')
+        temp_file.seek(0)  # Upewnij się, że plik jest na początku
+
+        # Dodaj zmieniony obraz do listy
+        resized_images.append(temp_file)
 
     # Przekaż post do szablonu
-    return render(request, 'blog/post/post_detail.html', {'post': post, 'images':images})
+    return render(request, 'blog/post/post_detail.html', {'post': post, 'images':resized_images})
