@@ -1,3 +1,4 @@
+import base64
 import os
 from datetime import datetime
 
@@ -210,24 +211,35 @@ def post_detail(request, post_id):
     images = Image.objects.filter(post=post)  # Pobieranie zdjęć powiązanych z postem
     resized_images = []
 
+    resized_images = []
+
     for image in images:
         img = PILImage.open(image.image)
-        img = img.convert('RGB')  # Upewnij się, że obraz jest w formacie RGB
+        img = img.convert('RGB')
 
-        # Zdefiniuj pożądaną szerokość
-        base_width = 800
-        w_percent = (base_width / float(img.size[0]))  # Oblicz proporcjonalnie
-        h_size = int((float(img.size[1]) * float(w_percent)))
+        # base_width = 800
+        # w_percent = (base_width / float(img.size[0]))
+        # h_size = int((float(img.size[1]) * float(w_percent)))
+        # img = img.resize((base_width, h_size), PILImage.Resampling.LANCZOS)
 
-        img = img.resize((base_width, h_size), PILImage.Resampling.LANCZOS)
+        base_width = 600
+        base_height = 400  # Nowa, wymuszona wysokość
 
-        # Zapisz zmieniony obraz do pamięci (BytesIO)
+        img = img.resize((base_width, base_height), PILImage.Resampling.LANCZOS)
+
         temp_file = BytesIO()
         img.save(temp_file, format='JPEG')
-        temp_file.seek(0)  # Upewnij się, że plik jest na początku
+        temp_file.seek(0)
 
-        # Dodaj zmieniony obraz do listy
-        resized_images.append(temp_file)
+        # Kodowanie do base64
+        base64_image = base64.b64encode(temp_file.read()).decode('utf-8')
+        resized_images.append(
+            {
+                'base64': base64_image,
+                'title': image.title,
+                'date': image.add_date,
+            }
+        )
 
     # Przekaż post do szablonu
     return render(request, 'blog/post/post_detail.html', {'post': post, 'images':resized_images})

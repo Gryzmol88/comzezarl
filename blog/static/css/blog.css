@@ -104,3 +104,17 @@ li::marker {
     color: #ffffff; /* Biały tekst */
     border-color: #ff9999; /* Dopasowanie koloru obramowania */
 }
+
+    .stars {
+      font-size: 30px;
+      color: #ff9900;
+    }
+    .stars .star {
+      display: inline-block;
+    }
+    .star-filled {
+      color: #ff9900; /* Złota gwiazdka */
+    }
+    .star-empty {
+      color: #ccc; /* Szara (pusta) gwiazdka */
+    }

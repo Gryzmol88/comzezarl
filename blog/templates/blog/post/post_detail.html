@@ -3,64 +3,70 @@
 
 {% block content %}
 {% include "blog/modal/add_country_modal.html" %}
-
-
-
-<!-- Sekcja z tekstem i karuzelą -->
-<div class="container">
-  <div class="row align-items-center">
-    <!-- Tekst -->
-    <div class="col-lg-6">
-      <h2 class="mb-4">Tytuł sekcji</h2>
-      <p class="lead">
-        To jest przykładowy tekst opisujący Twoją stronę. Możesz tutaj umieścić dowolne informacje — o sobie, o produkcie albo o Twojej firmie. Bootstrap ułatwia tworzenie responsywnych i atrakcyjnych stron internetowych!
-      </p>
-      <a href="#" class="btn btn-primary mt-3">Dowiedz się więcej</a>
-    </div>
-
-    <!-- Karuzela -->
-    <div class="col-lg-6">
-      <div id="carouselExampleCaptions" class="carousel slide shadow rounded" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slajd 1"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slajd 2"></button>
-          <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slajd 3"></button>
-        </div>
-        <div class="carousel-inner rounded">
-          <div class="carousel-item active">
-            <img src="https://source.unsplash.com/600x400/?nature,water" class="d-block w-100" alt="Zdjęcie 1">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Piękne jezioro</h5>
-              <p>Relaks wśród natury i świeżego powietrza.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="https://source.unsplash.com/600x400/?nature,forest" class="d-block w-100" alt="Zdjęcie 2">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Gęsty las</h5>
-              <p>Odkryj niesamowite zakątki przyrody.</p>
-            </div>
-          </div>
-          <div class="carousel-item">
-            <img src="https://source.unsplash.com/600x400/?nature,mountain" class="d-block w-100" alt="Zdjęcie 3">
-            <div class="carousel-caption d-none d-md-block">
-              <h5>Góry o zachodzie słońca</h5>
-              <p>Przeżyj przygodę na szczytach świata.</p>
-            </div>
-          </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Poprzedni</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Następny</span>
-        </button>
+  <div class="text-center">
+    <h2 class="mb-4">{{ post.title }}</h2>
+</div>
+  <!-- Karuzela -->
+<div class="row align-items-center"">
+  <div class="col-6 mx-auto">
+    <div id="carouselExampleCaptions" class="carousel slide shadow rounded" data-bs-ride="carousel">
+      <!-- Wskaźniki -->
+      <div class="carousel-indicators">
+        {% for image in images %}
+          <button type="button"
+                  data-bs-target="#carouselExampleCaptions"
+                  data-bs-slide-to="{{ forloop.counter0 }}"
+                  {% if forloop.first %}class="active" aria-current="true"{% endif %}
+                  aria-label="Slajd {{ forloop.counter }}">
+          </button>
+        {% endfor %}
       </div>
+      <!-- Slajdy -->
+      <div class="carousel-inner rounded">
+        {% for image in images %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <img src="data:image/jpeg;base64,{{ image.base64 }}" class="d-block w-100" alt="Zdjęcie {{ forloop.counter }}">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ image.title }}</h5>
+              <p>{{ image.date }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      <!-- Strzałki -->
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Poprzedni</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Następny</span>
+      </button>
+
     </div>
   </div>
-</div>
+    </div>
+  <!-- Tekst posta -->
+  <div class="text-center">
+    <p class="lead">{{ post.body }}</p>
+  </div>
+
+
+
+
+<!--  <h1>Ocena Restauracji</h1>-->
+
+<!--<div class="stars">-->
+<!--  {% for i in range(1, 5) %}-->
+<!--    <span class="star star-filled">&#9733;</span> &lt;!&ndash; Złota gwiazdka &ndash;&gt;-->
+<!--  {% endfor %}-->
+
+<!--  {% for i in range(5 + 1, 7) %}-->
+<!--    <span class="star star-empty">&#9733;</span> &lt;!&ndash; Pusta szara gwiazdka &ndash;&gt;-->
+<!--  {% endfor %}-->
+<!--</div>-->
+
 
 
 
