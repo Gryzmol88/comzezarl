@@ -238,8 +238,47 @@ def post_detail(request, post_id):
                 'base64': base64_image,
                 'title': image.title,
                 'date': image.add_date,
+
             }
         )
 
+    taste_rating = post.taste_rating
+    price_rating = post.price_rating
+    restaurant_rating = post.restaurant_rating
+    overall_rating = post.overall_rating
+
+
+
+    taste_rating_full_stars = range(taste_rating)
+    taste_rating_empty_stars = range(6-taste_rating)
+
+    price_rating_full_stars = range(price_rating)
+    price_rating_empty_stars = range(6-price_rating)
+
+    restaurant_rating_full_stars = range(restaurant_rating)
+    restaurant_rating_empty_stars = range(6-restaurant_rating)
+
+    overall_rating_full_stars = range(overall_rating)
+    overall_rating_empty_stars = range(6-overall_rating)
+
+
+
     # Przekaż post do szablonu
-    return render(request, 'blog/post/post_detail.html', {'post': post, 'images':resized_images})
+    return render(request, 'blog/post/post_detail.html', {
+                                                        'post': post,
+                                                        'images':resized_images,
+
+
+                                                        'taste_rating_full_stars' :taste_rating_full_stars,
+                                                        'taste_rating_empty_stars' : taste_rating_empty_stars,
+
+                                                        'price_rating_full_stars' :price_rating_full_stars,
+                                                        'price_rating_empty_stars' : price_rating_empty_stars,
+
+                                                        'restaurant_rating_full_stars' :restaurant_rating_full_stars,
+                                                        'restaurant_rating_empty_stars' : restaurant_rating_empty_stars,
+
+                                                        'overall_rating_full_stars' : overall_rating_full_stars,
+                                                        'overall_rating_empty_stars' :overall_rating_empty_stars
+                                                                                }
+                  )

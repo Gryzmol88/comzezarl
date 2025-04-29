@@ -55,17 +55,49 @@
 
 
 
-<!--  <h1>Ocena Restauracji</h1>-->
+  <h1>Ocena Smaku</h1>
 
-<!--<div class="stars">-->
-<!--  {% for i in range(1, 5) %}-->
-<!--    <span class="star star-filled">&#9733;</span> &lt;!&ndash; Złota gwiazdka &ndash;&gt;-->
-<!--  {% endfor %}-->
+<div class="stars">
+  {% for _ in taste_rating_full_stars %}
+    <span class="star star-filled">&#9733;</span>
+  {% endfor %}
+  {% for _ in taste_rating_empty_stars %}
+    <span class="star star-empty">&#9733;</span>
+  {% endfor %}
+</div>
 
-<!--  {% for i in range(5 + 1, 7) %}-->
-<!--    <span class="star star-empty">&#9733;</span> &lt;!&ndash; Pusta szara gwiazdka &ndash;&gt;-->
-<!--  {% endfor %}-->
-<!--</div>-->
+  <h1>Ocena Cen</h1>
+
+<div class="stars">
+  {% for _ in price_rating_full_stars %}
+    <span class="star star-filled">&#9733;</span>
+  {% endfor %}
+  {% for _ in price_rating_empty_stars %}
+    <span class="star star-empty">&#9733;</span>
+  {% endfor %}
+</div>
+
+  <h1>Ocena Restauracji</h1>
+
+<div class="stars">
+  {% for _ in restaurant_rating_full_stars %}
+    <span class="star star-filled">&#9733;</span>
+  {% endfor %}
+  {% for _ in restaurant_rating_empty_stars %}
+    <span class="star star-empty">&#9733;</span>
+  {% endfor %}
+</div>
+
+  <h1>Ocena Ogólna</h1>
+
+<div class="stars">
+  {% for _ in overall_rating_full_stars %}
+    <span class="star star-filled">&#9733;</span>
+  {% endfor %}
+  {% for _ in overall_rating_empty_stars %}
+    <span class="star star-empty">&#9733;</span>
+  {% endfor %}
+</div>
 
 
 

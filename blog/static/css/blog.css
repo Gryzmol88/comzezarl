@@ -105,16 +105,15 @@ li::marker {
     border-color: #ff9999; /* Dopasowanie koloru obramowania */
 }
 
-    .stars {
-      font-size: 30px;
-      color: #ff9900;
-    }
-    .stars .star {
-      display: inline-block;
-    }
-    .star-filled {
-      color: #ff9900; /* Złota gwiazdka */
-    }
-    .star-empty {
-      color: #ccc; /* Szara (pusta) gwiazdka */
-    }
+.stars {
+  font-size: 1.5rem;       /* Rozmiar gwiazdek */
+  color: #ccc;             /* Domyślny kolor pustych gwiazdek */
+}
+
+.star-filled {
+  color: gold;             /* Złoty kolor dla ocenionych gwiazdek */
+}
+
+.star-empty {
+  color: #ddd;             /* Jaśniejszy szary dla nieaktywnych gwiazdek */
+}
