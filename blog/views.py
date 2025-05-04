@@ -209,7 +209,7 @@ def post_detail(request, post_id):
     # Pobierz post o danym id, jeśli nie istnieje, zwróć 404
     post = get_object_or_404(Post, pk=post_id)
     images = Image.objects.filter(post=post)  # Pobieranie zdjęć powiązanych z postem
-    resized_images = []
+
 
     resized_images = []
 

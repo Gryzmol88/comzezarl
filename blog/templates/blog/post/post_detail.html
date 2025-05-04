@@ -3,11 +3,14 @@
 
 {% block content %}
 {% include "blog/modal/add_country_modal.html" %}
-  <div class="text-center">
+
+
+<div class="text-center">
     <h2 class="mb-4">{{ post.title }}</h2>
 </div>
+
   <!-- Karuzela -->
-<div class="row align-items-center"">
+<div class="row align-items-center">
   <div class="col-6 mx-auto">
     <div id="carouselExampleCaptions" class="carousel slide shadow rounded" data-bs-ride="carousel">
       <!-- Wskaźniki -->
@@ -46,60 +49,64 @@
 
     </div>
   </div>
+</div>
+
+<!-- Oceny i Post -->
+<div class="container my-5" style="font-family: 'Inter', sans-serif;">
+  <div class="row">
+
+    <!-- Oceny -->
+    <div class="col-md-4 mb-4 rating-section">
+      <h4 class="mb-3" style="font-family: 'Lora', serif;">Ocena Smaku</h4>
+      <div class="star-rating mb-3">
+        {% for _ in taste_rating_full_stars %}
+          <span class="star star-filled">&#9733;</span>
+        {% endfor %}
+        {% for _ in taste_rating_empty_stars %}
+          <span class="star">&#9733;</span>
+        {% endfor %}
+      </div>
+
+      <h4 class="mb-3" style="font-family: 'Lora', serif;">Ocena Ceny</h4>
+      <div class="star-rating mb-3">
+        {% for _ in price_rating_full_stars %}
+          <span class="star star-filled">&#9733;</span>
+        {% endfor %}
+        {% for _ in price_rating_empty_stars %}
+          <span class="star">&#9733;</span>
+        {% endfor %}
+      </div>
+
+      <h4 class="mb-3" style="font-family: 'Lora', serif;">Ocena Restauracji</h4>
+      <div class="star-rating mb-3">
+        {% for _ in restaurant_rating_full_stars %}
+          <span class="star star-filled">&#9733;</span>
+        {% endfor %}
+        {% for _ in restaurant_rating_empty_stars %}
+          <span class="star">&#9733;</span>
+        {% endfor %}
+      </div>
+
+      <h4 class="mb-3" style="font-family: 'Lora', serif;">Ocena Ogólna</h4>
+      <div class="star-rating mb-3">
+        {% for _ in overall_rating_full_stars %}
+          <span class="star star-filled">&#9733;</span>
+        {% endfor %}
+        {% for _ in overall_rating_empty_stars %}
+          <span class="star">&#9733;</span>
+        {% endfor %}
+      </div>
     </div>
-  <!-- Tekst posta -->
-  <div class="text-center">
-    <p class="lead">{{ post.body }}</p>
+
+    <!-- Treść posta -->
+    <div class="col-md-8 post-body">
+      <div class="content lead">
+        {{ post.get_formatted_body|safe }}
+      </div>
+    </div>
+
   </div>
-
-
-
-
-  <h1>Ocena Smaku</h1>
-
-<div class="stars">
-  {% for _ in taste_rating_full_stars %}
-    <span class="star star-filled">&#9733;</span>
-  {% endfor %}
-  {% for _ in taste_rating_empty_stars %}
-    <span class="star star-empty">&#9733;</span>
-  {% endfor %}
 </div>
-
-  <h1>Ocena Cen</h1>
-
-<div class="stars">
-  {% for _ in price_rating_full_stars %}
-    <span class="star star-filled">&#9733;</span>
-  {% endfor %}
-  {% for _ in price_rating_empty_stars %}
-    <span class="star star-empty">&#9733;</span>
-  {% endfor %}
-</div>
-
-  <h1>Ocena Restauracji</h1>
-
-<div class="stars">
-  {% for _ in restaurant_rating_full_stars %}
-    <span class="star star-filled">&#9733;</span>
-  {% endfor %}
-  {% for _ in restaurant_rating_empty_stars %}
-    <span class="star star-empty">&#9733;</span>
-  {% endfor %}
-</div>
-
-  <h1>Ocena Ogólna</h1>
-
-<div class="stars">
-  {% for _ in overall_rating_full_stars %}
-    <span class="star star-filled">&#9733;</span>
-  {% endfor %}
-  {% for _ in overall_rating_empty_stars %}
-    <span class="star star-empty">&#9733;</span>
-  {% endfor %}
-</div>
-
-
-
-
 {% endblock %}
+
+
