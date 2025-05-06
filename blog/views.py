@@ -182,15 +182,17 @@ def upload_photo(request, post_id):
         images = request.FILES.getlist('formFileMultiple')  # Obsługa wielu plików
 
         for image in images:
-            file_path = os.path.join(settings.MEDIA_ROOT,datetime.now().strftime('%Y/%m/%d'), image.name)
-            print(file_path)
-            default_storage.save(file_path, ContentFile(image.read()))  # Zapis pliku
+            relative_path = f'{datetime.now().strftime('%Y/%m/%d')}/ {image.name}'
+            full_path = os.path.join(settings.MEDIA_ROOT,relative_path)
+
+            os.makedirs(os.path.dirname(full_path), exist_ok=True)
+            default_storage.save(full_path, ContentFile(image.read())) # Zapis pliku
 
             #TODO Dodawanie obiektu image i wiazanie go z konkretnym postem
 
             # Utworzenie nowego postu
             new_image = Image.objects.create(
-                image=image,
+                image=relative_path,
             add_date = datetime.now(),
             title ="",
                 post = post,

@@ -108,7 +108,7 @@ class Post(models.Model):
         return dict(self.RATE).get(self.overall_rating, "Brak oceny")
 
 class Image(models.Model):
-    image = models.ImageField(upload_to='media/')
+    image = models.ImageField()
     add_date = models.DateField()
     title = models.CharField(max_length=100)
     #TODO Usunac post i dodac migracje
