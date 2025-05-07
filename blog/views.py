@@ -1,5 +1,6 @@
 import base64
 import os
+from collections import defaultdict
 from datetime import datetime
 
 from django.contrib.contenttypes.models import ContentType
@@ -30,13 +31,25 @@ def news_page(request):
 
 def byd_page(request):
 
-    restaurants = Restaurant.objects.filter(city__name='Bydgoszcz').select_related('city')
+    restaurants = Restaurant.objects.filter(city__country_name='Polska').select_related('city', 'city__country')
 
 
     return render(request, 'blog/post/byd.html', {'restaurants': restaurants})
 
 def poland_page(request):
-    return render(request, 'blog/post/poland.html')
+    # Pobieramy wszystkie restauracje z Polskich miast
+    restaurants = Restaurant.objects.filter(city__country__name='Polska').select_related('city').prefetch_related(
+        'posts')
+
+    # Grupowanie restauracji po mieście
+    grouped = defaultdict(list)
+    for restaurant in restaurants:
+        grouped[restaurant.city].append(restaurant)
+
+    # Konwersja defaultdict -> dict (Django templates tego wymagają)
+    grouped_restaurants = dict(grouped)
+
+    return render(request, 'blog/post/poland.html', {'grouped_restaurants': grouped_restaurants})
 
 def world_page(request):
     return render(request, 'blog/post/world.html')

@@ -2,6 +2,51 @@
 
 {% block title %}Polska{% endblock %}
 
+{% block sidebar %}
+
+
+<div class="container mt-3">
+
+    <div class="sidebar-header">Lista restauracji</div>
+    <div class="accordion" id="restaurantAccordion">
+        {% for city, restaurants in grouped_restaurants.items %}
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="heading{{ city.id }}">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#collapse{{ city.id }}" aria-expanded="false"
+                        aria-controls="collapse{{ city.id }}">
+                    {{ city.name }}
+                </button>
+            </h2>
+            <div id="collapse{{ city.id }}" class="accordion-collapse collapse"
+                 aria-labelledby="heading{{ city.id }}" data-bs-parent="#restaurantAccordion">
+                <div class="accordion-body">
+                     <ul>
+                    {% for restaurant in restaurants %}
+                    <li>
+                        <strong>{{ restaurant.name }}</strong>
+                        <ul>
+                            {% for post in restaurant.posts.all %}
+                            <li><a href="{% url 'blog:post_detail' post.id %}"><strong>{{ post.title }}</strong></a></li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                    {% endfor %}
+                </ul>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+{% endblock %}
+
+
 {% block content %}
 <p>Tutaj Polska</p>
+
+
+
 {% endblock %}
