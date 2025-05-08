@@ -30,11 +30,10 @@ def news_page(request):
     return render(request, 'blog/post/news.html')
 
 def byd_page(request):
+    posts = Post.objects.filter(restaurant__city__name='Bydgoszcz')
 
-    restaurants = Restaurant.objects.filter(city__country_name='Polska').select_related('city', 'city__country')
 
-
-    return render(request, 'blog/post/byd.html', {'restaurants': restaurants})
+    return render(request, 'blog/post/byd.html', {'posts': posts})
 
 def poland_page(request):
     # Pobieramy wszystkie restauracje z Polskich miast
