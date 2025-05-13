@@ -1,6 +1,55 @@
 {% extends "blog/base_sidebar_content.html" %}
 
 {% block title %}Świat{% endblock %}
+{% block sidebar %}
+
+<div class="container mt-3">
+    <div class="sidebar-header">Lista restauracji</div>
+
+    {% for country, cities in grouped_restaurants.items %}
+        <h2 class="mt-4 country-heading">{{ country.name }}</h2>
+        <div class="accordion" id="accordionCountry{{ country.id }}">
+            {% for city, restaurants in cities.items %}
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingCity{{ city.id }}">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#collapseCity{{ city.id }}" aria-expanded="false"
+                            aria-controls="collapseCity{{ city.id }}">
+                        {{ city.name }}
+                    </button>
+                </h2>
+                <div id="collapseCity{{ city.id }}" class="accordion-collapse collapse"
+                     aria-labelledby="headingCity{{ city.id }}" data-bs-parent="#accordionCountry{{ country.id }}">
+                    <div class="accordion-body">
+                        <ul>
+                            {% for restaurant, posts in restaurants.items %}
+                            <li>
+                                <strong>{{ restaurant.name }}</strong>
+                                <ul>
+                                    {% for post in posts %}
+                                    <li>
+                                        <a href="{% url 'blog:post_detail' post.id %}">
+                                            <strong>{{ post.title }}</strong>
+                                        </a>
+                                    </li>
+                                    {% empty %}
+                                    <li><em>Brak postów</em></li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+</div>
+
+
+
+{% endblock %}
 
 {% block content %}
 <p>Tutaj Świat</p>

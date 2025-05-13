@@ -134,3 +134,7 @@ li::marker {
     }
   }
 
+  .country-heading {
+    color: #007bff; /* niebieski */
+}
+

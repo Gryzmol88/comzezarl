@@ -51,7 +51,25 @@ def poland_page(request):
     return render(request, 'blog/post/poland.html', {'grouped_restaurants': grouped_restaurants})
 
 def world_page(request):
-    return render(request, 'blog/post/world.html')
+
+    # Pobieramy wszystkie restauracje z Polskich miast
+    restaurants =  Restaurant.objects.select_related('city__country').prefetch_related('posts')
+
+    # Struktura: country -> city -> restaurant -> posts
+    grouped = defaultdict(lambda: defaultdict(lambda: defaultdict(list)))
+    for restaurant in restaurants:
+        country = restaurant.city.country
+        city = restaurant.city
+        posts = list(restaurant.posts.all())
+
+        grouped[country][city][restaurant] = posts
+
+        # Zamieniamy defaultdict na zwykłe dict
+        grouped_restaurants = {country: {city: dict(restaurants) for city, restaurants in cities.items()}
+                        for country, cities in grouped.items()}
+
+
+    return render(request, 'blog/post/world.html', {'grouped_restaurants': grouped_restaurants})
 
 def other_page(request):
     return render(request, 'blog/post/other.html')
