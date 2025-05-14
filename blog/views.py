@@ -2,7 +2,6 @@ import base64
 import os
 from collections import defaultdict
 from datetime import datetime
-
 from django.contrib.contenttypes.models import ContentType
 from django.core.files.base import ContentFile
 from django.core.files.storage import default_storage
@@ -16,7 +15,7 @@ from django.http import JsonResponse
 import logging
 import json
 from io import BytesIO
-
+from django.contrib.auth.decorators import login_required
 
 # Utwórz logger
 logger = logging.getLogger(__name__)
@@ -96,7 +95,7 @@ def contact_page(request):
 #     return render(request, 'blog/post/new_post.html',context)
 
 
-
+@login_required
 def add_new_post(request):
     if request.method == 'POST':
 
@@ -156,13 +155,13 @@ def cities_by_country(request, country_id):
     return JsonResponse({'cities': cities_data})
 
 
-
+@login_required
 def accept_new_post(request):
     return render(request, 'blog/post/accept_new_post.html')
 
 
 
-
+@login_required
 def add_country(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -176,10 +175,11 @@ def add_country(request):
     return JsonResponse({"success": False, "error": "Nieprawidłowa metoda."}, status=405)
 
 
-
+@login_required
 def load_add_country_modal(request):
     return render(request, "blog/modal/add_country_modal.html")
 
+@login_required
 def add_city(request):
     if request.method == "POST":
         data = json.loads(request.body)
@@ -199,7 +199,7 @@ def load_add_city_modal(request):
     return render(request, "blog/modal/add_city_modal.html")
 
 
-
+@login_required
 def upload_photo(request, post_id):
     post = get_object_or_404(Post, id=post_id)
 
@@ -314,3 +314,5 @@ def post_detail(request, post_id):
                                                         'overall_rating_empty_stars' :overall_rating_empty_stars
                                                                                 }
                   )
+
+
